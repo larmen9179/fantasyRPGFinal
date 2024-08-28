@@ -65,7 +65,7 @@ int main()
     
 
     //adding the weapon to the player's inventory
-    player.addWeapon(firstWeapon, 1);
+    player.addWeapon(firstWeapon, 1, 2);
 
     //setting the player's current weapon to the first weapon
     player.setCurrentWeapon(firstWeapon);
@@ -75,7 +75,7 @@ int main()
     //Testing logic for magic attacks
 
     std::string firstMagic = "Fireball";
-    player.addMagic(firstMagic, 3);
+    player.addMagic(firstMagic, 1, 3);
 
     player.setCurrentMagic(firstMagic);
 
@@ -178,6 +178,7 @@ void gameLoop() {
 
 void fight(std::vector<int> &playerPosition) {
     
+    bool ran = false;
     //removing the previous screen showing dungeon map
     clearScreen();
 
@@ -354,7 +355,7 @@ void fight(std::vector<int> &playerPosition) {
 
                     std::cout << "You attack the " << enemiesToFight[enemyToAttack].getName() << " with " << player.getWeapon(player.getCurrentWeapon()).name;
 
-                    int attackDamage = getRand(1, player.getWeapon(player.getCurrentWeapon()).damage);
+                    int attackDamage = getRand(player.getWeapon(player.getCurrentWeapon()).minDmg, player.getWeapon(player.getCurrentWeapon()).maxDmg);
 
                     enemiesToFight[enemyToAttack].takeDamage(attackDamage);
 
@@ -386,7 +387,7 @@ void fight(std::vector<int> &playerPosition) {
 
                     std::cout << "You attack the " << enemiesToFight[enemyToAttack].getName() <<  " with " << player.getMagic(player.getCurrentMagic()).name;
 
-                    int attackDamage = getRand(1, player.getMagic(player.getCurrentMagic()).damage);
+                    int attackDamage = getRand(player.getMagic(player.getCurrentMagic()).minDmg, player.getMagic(player.getCurrentMagic()).maxDmg);
 
                     enemiesToFight[enemyToAttack].takeDamage(attackDamage);
 
@@ -413,6 +414,7 @@ void fight(std::vector<int> &playerPosition) {
 		}
 		else if (userInput == "r") {
 			std::cout << "You have successfully ran away!\n";
+            ran = true;
 			break;
 		}
 		else if (userInput == "i") {
@@ -467,6 +469,18 @@ void fight(std::vector<int> &playerPosition) {
         }
         
 
+    }
+
+    if (ran) {
+        std::cout << '\n';
+
+        std::cout << "Type \"Enter\" to continue...\n";
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.get();
+
+        clearScreen();
+
+        return;
     }
 
     std::cout << "All enemies have been defeated...\n";

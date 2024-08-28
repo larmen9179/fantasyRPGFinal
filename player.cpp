@@ -1,8 +1,8 @@
 #include "player.h"
 
 //weapon struct
-Weapon::Weapon(const std::string& nameIn, const int damageIn)
-	: name(nameIn), damage(damageIn)
+Weapon::Weapon(const std::string& nameIn, const int minDmgIn, const int maxDmgIn)
+	: name(nameIn), minDmg(minDmgIn), maxDmg(maxDmgIn)
 {}
 
 Weapon::Weapon() {}
@@ -118,7 +118,7 @@ void Player::showWeapons(){
 	}
 	else{
 		for (auto& weapon : this->weapons) {
-			std::cout << weapon.first << " - Max Damage: " << weapon.second.damage << '\n';
+			std::cout << weapon.first << " - Damage: " << weapon.second.minDmg << " To " << weapon.second.maxDmg << '\n';
 		}
 	}
 }
@@ -140,7 +140,7 @@ void Player::showMagic(){
 	}
 	else{
 		for (auto& magicItem : this->magic) {
-			std::cout << magicItem.first << " - Max Damage: " << magicItem.second.damage << '\n';
+			std::cout << magicItem.first << " - Damage: " << magicItem.second.minDmg << " To " << magicItem.second.maxDmg << '\n';
 		}
 	}
 }
@@ -167,14 +167,14 @@ bool Player::hasMagic() {
 	}
 }
 
-void Player::addWeapon(std::string &nameIn, int damageIn){
+void Player::addWeapon(std::string &nameIn, int minDmgIn, int maxDmgIn){
 	
-	this->weapons[nameIn] = Weapon(nameIn, damageIn);
+	this->weapons[nameIn] = Weapon(nameIn, minDmgIn, maxDmgIn);
 }
 
-void Player::addMagic(std::string &nameIn, int damageIn){
+void Player::addMagic(std::string &nameIn, int minDmgIn, int maxDmgIn){
 	
-	this->magic[nameIn] = Weapon(nameIn, damageIn);
+	this->magic[nameIn] = Weapon(nameIn, minDmgIn, maxDmgIn);
 }
 
 void Player::takeDamage(int damageIn){

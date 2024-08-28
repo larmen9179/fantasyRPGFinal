@@ -9,9 +9,10 @@
 //they both have just a name and a damage amount
 struct Weapon {
 	std::string name;
-	int damage;
+	int minDmg;
+	int maxDmg;
 
-	Weapon(const std::string& nameIn, const int damageIn);
+	Weapon(const std::string& nameIn, const int minDmgIn, const int maxDmgIn);
 	Weapon();
 };
 
@@ -86,8 +87,8 @@ public:
 
 	bool hasMagic();
 
-	void addWeapon(std::string &nameIn, int damageIn);
-	void addMagic(std::string &nameIn, int damageIn);
+	void addWeapon(std::string &nameIn, int minDmgIn, int maxDmgIn);
+	void addMagic(std::string &nameIn, int minDmgIn, int maxDmgIn);
 
 	void takeDamage(int damageIn);
 	
