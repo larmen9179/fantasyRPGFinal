@@ -31,8 +31,8 @@ std::vector<std::vector<std::string>> dungeon =
 
     //room 1 encounters just one enemy
     {"-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "1", "-1"},
-    {"-1", "-1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "-1"},
-    {"-1", "1", "1", "-1", "1", "1", "-1", "1", "1", "1", "1", "-1"},
+    {"-1", "-1", "c", "1", "1", "1", "1", "1", "1", "1", "1", "-1"},
+    {"-1", "1", "1", "-1", "w", "1", "-1", "m", "1", "c", "t", "-1"},
     {"-1", "s", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"}
 
 
@@ -59,7 +59,7 @@ int main()
     //-------------TESTING-------------------------------
 
     //giving the player the map early to test print map functionality
-    //player.setHasMap(true);
+    player.setHasMap(true);
 
     //--------------------------------------------
     
@@ -754,8 +754,11 @@ void printDungeon(std::vector<int> &playerPosition) {
                 else if (i == playerPosition[0] && j == playerPosition[1]) {
                     std::cout << "p ";
                 }
-                else if (dungeon[i][j] == "1" || dungeon[i][j] == "2" || dungeon[i][j] == "3") {
+                else if (dungeon[i][j] == "1" || dungeon[i][j] == "2" || dungeon[i][j] == "3"){
                     std::cout << "- ";
+                }
+                else {
+                    std::cout << dungeon[i][j] << " ";
                 }
             }
             std::cout << '\n';
@@ -764,8 +767,25 @@ void printDungeon(std::vector<int> &playerPosition) {
     else {
         for (int i = 0; i < dungeon.size(); i++) {
             for (int j = 0; j < dungeon[i].size(); j++) {
-                if(player.)
+                if (dungeon[i][j] == "-1") {
+                    std::cout << "  ";
+                }
+				else if (i == playerPosition[0] && j == playerPosition[1]) {
+					std::cout << "p ";
+				}
+                else {
+                    if (player.hasBeenSpot(i, j)) {
+						if (dungeon[i][j] == "1" || dungeon[i][j] == "2" || dungeon[i][j] == "3")
+                            std::cout << "- ";
+                        else
+							std::cout << dungeon[i][j] << " ";
+                    }
+                    else {
+                        std::cout << "  ";
+                    }
+                }
             }
+            std::cout << '\n';
         }
     }
 

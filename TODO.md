@@ -18,13 +18,13 @@ TODO
     [X] - Assign damage for each turn based off a random number from 1 - the max damage for any weapon/magic
 
 
-[] - Make map item
+[X] - Make map item
 
-    [] - Player can only see places they've been to
+    [X] - Player can only see places they've been to
 
-    [] - When a player enters a room with an event in it, show it to them on their map
+    [X] - When a player enters a room with an event in it, show it to them on their map
 
-    [] - If the player has the map, show them all the spots
+    [X] - If the player has the map, show them all the spots
 
 
 [] - Implement event rooms

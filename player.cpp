@@ -182,8 +182,7 @@ void Player::takeDamage(int damageIn){
 	this->healthPoints -= damageIn;
 }
 
-//TODO
-void Player::hasBeenSpot(int i, int j) {
-
+bool Player::hasBeenSpot(int i, int j) {
+	return this->hasBeen[i][j];
 }
 

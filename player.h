@@ -92,5 +92,6 @@ public:
 
 	void takeDamage(int damageIn);
 	
-	void hasBeenSpot(int i, int j);
+	bool hasBeenSpot(int i, int j);
+
 };
