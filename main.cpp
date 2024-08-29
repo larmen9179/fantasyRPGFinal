@@ -31,8 +31,8 @@ std::vector<std::vector<std::string>> dungeon =
 
     //room 1 encounters just one enemy
     {"-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "1", "-1"},
-    {"-1", "0", "1", "1", "1", "1", "1", "1", "1", "1", "1", "-1"},
-    {"-1", "1", "1", "0", "1", "1", "0", "1", "0", "1", "1", "-1"},
+    {"-1", "-1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "-1"},
+    {"-1", "1", "1", "-1", "1", "1", "-1", "1", "1", "1", "1", "-1"},
     {"-1", "s", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"}
 
 
@@ -76,7 +76,7 @@ int main()
 
     std::string firstMagic = "Fireball";
     player.addMagic(firstMagic, 1, 3);
-
+    
     player.setCurrentMagic(firstMagic);
 
     //--------------------------------------------
@@ -745,7 +745,7 @@ void printDungeon(std::vector<int> &playerPosition) {
         std::cout << "-";
     }
 
-    if (!player.getHasMap()) {
+	if (player.getHasMap()) {
         for (int i = 0; i < dungeon.size(); i++) {
             for (int j = 0; j < dungeon[i].size(); j++) {
                 if (dungeon[i][j] == "-1") {
@@ -757,22 +757,23 @@ void printDungeon(std::vector<int> &playerPosition) {
                 else if (dungeon[i][j] == "1" || dungeon[i][j] == "2" || dungeon[i][j] == "3") {
                     std::cout << "- ";
                 }
-                else if (dungeon[i][j] == "0") {
-                    std::cout << "  ";
-                }
             }
             std::cout << '\n';
         }
-
-        for (int i = 0; i < dungeon.size() * 2; i++) {
-            std::cout << "-";
+	}
+    else {
+        for (int i = 0; i < dungeon.size(); i++) {
+            for (int j = 0; j < dungeon[i].size(); j++) {
+                if(player.)
+            }
         }
     }
-    else {
-        std::cout << "You now have the map\n";
-        std::cout << "You can see the entire dungeon...\n";
-    }
+
     
+
+    for (int i = 0; i < dungeon.size() * 2; i++) {
+        std::cout << "-";
+    }
 
     std::cout << '\n';
 

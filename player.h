@@ -92,4 +92,5 @@ public:
 
 	void takeDamage(int damageIn);
 	
+	void hasBeenSpot(int i, int j);
 };
