@@ -53,6 +53,11 @@ int enemyEncounter{};
 //stores the amount of gold the player has
 int gold{};
 
+//store the player's defense level, and damage levels for magic and weapons
+int defenseLevel{};
+int magicLevel{};
+int weaponLevel{};
+
 //tells if the player actually switched rooms last turn
 bool transition = false;
 
@@ -107,6 +112,8 @@ int getRand(int min, int max) {
 }
 
 void eventHandler(const std::vector<int> &playerPosition){
+
+    //weapon room (for gaining new weapons)
     if (dungeon[playerPosition[0]][playerPosition[1]] == "w") {
 
         std::cout << "You have found the " << pickupableWeapons.back().name << "...\n";
@@ -115,30 +122,86 @@ void eventHandler(const std::vector<int> &playerPosition){
 
         pickupableWeapons.pop_back();
 
+        std::cout << "Type \"Enter\" to continue...\n";
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.get();
+        
     }
+    //totem room (for gaining new spells)
     else if (dungeon[playerPosition[0]][playerPosition[1]] == "t") {
 		std::cout << "You have found the " << pickupableMagic.back().name << " spell...\n";
 
 		player.addMagic(pickupableMagic.back().name, pickupableMagic.back().minDmg, pickupableMagic.back().maxDmg);
 
 		pickupableMagic.pop_back();
+
+        std::cout << "Type \"Enter\" to continue...\n";
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.get();
     }
+    //map room
     else if (dungeon[playerPosition[0]][playerPosition[1]] == "m") {
         std::cout << "You've found the map...";
         player.setHasMap(true);
+
+        std::cout << "Type \"Enter\" to continue...\n";
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.get();
     }
+    //chest room
 	else if (dungeon[playerPosition[0]][playerPosition[1]] == "c") {
-		std::cout << "You've found a chest...\n";
+		
+        //giving the player a random amount of gold from each chest found
+        std::cout << "You've found a chest...\n";
 
 		int gAmount = getRand(3, 29);
 
 		std::cout << "You got " << gAmount << " gold...\n";
 
+        //updating the player's total gold from the value generated
         gold += gAmount;
+
+        //waiting in the console for 2 seconds
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+
+        //generating a drop chance for character upgrades
+        int dropChance = getRand(1, 9);
+
+        //gives the player more defense (reduced damage from enemies attacks)
+        if (dropChance <= 3) {
+            std::cout << "You've found an armor piece...\n";
+            std::cout << "Your defense level has increased...\n";
+
+            defenseLevel++;
+
+        }
+        //gives the player more magic damage
+        else if (dropChance >= 4 && dropChance <= 6) {
+            std::cout << "You've found a magical relic...\n";
+            std::cout << "Your magic damage has increased...\n";
+
+            magicLevel++;
+
+        }
+        //gives the player more weapon damage
+        else if(dropChance >= 7 && dropChance <= 9){
+            std::cout << "You're found an enchanted shard...\n";
+            std::cout << "Your weapon damage has increased...\n";
+
+            weaponLevel++;
+            
+		}
+
+        std::cout << "Type \"Enter\" to continue...\n";
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.get();
+
 	}
     else if (dungeon[playerPosition[0]][playerPosition[1]] == "b") {
         std::cout << "You've found a boss room...\n";
     }
+
+    dungeon[playerPosition[0]][playerPosition[1]] = "1";
 }
 
 void gameLoop() {
@@ -191,6 +254,7 @@ void gameLoop() {
             }
         }
 		else {
+            
             eventHandler(playerPosition);
 		}
 
@@ -203,6 +267,7 @@ void gameLoop() {
 
         //printing player stats
         std::cout << "Current Health: " << player.getHealthPoints() << '\n';
+        std::cout << "Total Gold: " << gold << '\n';
 
         //prompting for user input
         std::cout << "Enter a command or type 'help' for a list of commands...\n";
@@ -398,6 +463,9 @@ void fight(std::vector<int> &playerPosition) {
 
                     int attackDamage = getRand(player.getWeapon(player.getCurrentWeapon()).minDmg, player.getWeapon(player.getCurrentWeapon()).maxDmg);
 
+                    //adding the player's weapon damage level to the attack damage
+                    attackDamage += weaponLevel;
+
                     enemiesToFight[enemyToAttack].takeDamage(attackDamage);
 
                     std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -429,6 +497,9 @@ void fight(std::vector<int> &playerPosition) {
                     std::cout << "You attack the " << enemiesToFight[enemyToAttack].getName() <<  " with " << player.getMagic(player.getCurrentMagic()).name;
 
                     int attackDamage = getRand(player.getMagic(player.getCurrentMagic()).minDmg, player.getMagic(player.getCurrentMagic()).maxDmg);
+
+                    //adding the player's magic damage level to the attack damage
+                    attackDamage += magicLevel;
 
                     enemiesToFight[enemyToAttack].takeDamage(attackDamage);
 
@@ -482,6 +553,7 @@ void fight(std::vector<int> &playerPosition) {
             for (auto& enemy : enemiesToFight) {
                 if (enemy.getHealthPoints() > 0) {
 
+                    //The enemy's damage is randomized from 1 to their damage attribute
                     int enemyDamage = getRand(1, enemy.getDamage());
 
                     player.takeDamage(enemyDamage);
