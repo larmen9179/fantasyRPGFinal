@@ -50,6 +50,9 @@ std::vector<Enemy> enemies;
 //rate for enemy encounters at each dungeon location that's not a specified room
 int enemyEncounter{};
 
+//stores the amount of gold the player has
+int gold{};
+
 //tells if the player actually switched rooms last turn
 bool transition = false;
 
@@ -105,9 +108,36 @@ int getRand(int min, int max) {
 
 void eventHandler(const std::vector<int> &playerPosition){
     if (dungeon[playerPosition[0]][playerPosition[1]] == "w") {
+
         std::cout << "You have found the " << pickupableWeapons.back().name << "...\n";
 
+        player.addWeapon(pickupableWeapons.back().name, pickupableWeapons.back().minDmg, pickupableWeapons.back().maxDmg);
 
+        pickupableWeapons.pop_back();
+
+    }
+    else if (dungeon[playerPosition[0]][playerPosition[1]] == "t") {
+		std::cout << "You have found the " << pickupableMagic.back().name << " spell...\n";
+
+		player.addMagic(pickupableMagic.back().name, pickupableMagic.back().minDmg, pickupableMagic.back().maxDmg);
+
+		pickupableMagic.pop_back();
+    }
+    else if (dungeon[playerPosition[0]][playerPosition[1]] == "m") {
+        std::cout << "You've found the map...";
+        player.setHasMap(true);
+    }
+	else if (dungeon[playerPosition[0]][playerPosition[1]] == "c") {
+		std::cout << "You've found a chest...\n";
+
+		int gAmount = getRand(3, 29);
+
+		std::cout << "You got " << gAmount << " gold...\n";
+
+        gold += gAmount;
+	}
+    else if (dungeon[playerPosition[0]][playerPosition[1]] == "b") {
+        std::cout << "You've found a boss room...\n";
     }
 }
 
@@ -562,7 +592,7 @@ std::vector<int> playerStart() {
 }
 
 bool eventRoom(std::vector<int> &playerPosition) {
-    if(dungeon[playerPosition[0]][playerPosition[1]] == "s") {
+    if(dungeon[playerPosition[0]][playerPosition[1]] == "s" || dungeon[playerPosition[0]][playerPosition[1]] == "w" || dungeon[playerPosition[0]][playerPosition[1]] == "t" || dungeon[playerPosition[0]][playerPosition[1]] == "c" || dungeon[playerPosition[0]][playerPosition[1]] == "b" || dungeon[playerPosition[0]][playerPosition[1]] == "m") {
 		return true;
 	}
     return false;
