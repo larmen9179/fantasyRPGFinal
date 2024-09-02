@@ -6,6 +6,7 @@
 void clearScreen();
 void showInventory();
 void printDungeon(std::vector<int> &playerPosition);
+void eventHandler(const std::vector<int>& playerPosition);
 void gameLoop();
 void inputHandler(std::string& userInput, std::vector<int>& playerPosition, std::vector<bool> &possibleMoves);
 void fight(std::vector<int> &playerPosition);
