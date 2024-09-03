@@ -44,6 +44,8 @@ Player player("Roghbradden", dungeon);
 std::vector<Weapon> pickupableWeapons = {Weapon("crossbow", 6, 11), Weapon("axe", 4, 8), Weapon("sword", 2, 5)};
 std::vector<Weapon> pickupableMagic = {Weapon("icestorm", 3, 12), Weapon("fireball", 1, 3), Weapon("lightning", 2,9), };
 
+std::vector<Item> pickupableItems = {Item("Health Potion", 1, 0), Item("Smokebomb", 1, 0), Item("Throwing Knives", 1, 15) };
+
 //clonable enemy objects
 std::vector<Enemy> enemies;
 
@@ -254,8 +256,8 @@ void gameLoop() {
             }
         }
 		else {
-            
             eventHandler(playerPosition);
+            clearScreen();
 		}
 
         transition = false;
@@ -556,6 +558,12 @@ void fight(std::vector<int> &playerPosition) {
                     //The enemy's damage is randomized from 1 to their damage attribute
                     int enemyDamage = getRand(1, enemy.getDamage());
 
+                    if (enemyDamage > defenseLevel)
+                        enemyDamage -= defenseLevel;
+
+                    else if (enemyDamage <= defenseLevel)
+                        enemyDamage = 1;
+                    
                     player.takeDamage(enemyDamage);
                     std::cout << enemy.getName() << " has attacked you for " << enemyDamage << " damage...\n";
                     std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -783,11 +791,11 @@ void showInventory() {
 
     std::cout << '\n';
 
-    std::cout << "Current Weapon: " << player.getCurrentWeapon() << '\n';
+    std::cout << "Equipped Weapon: " << player.getCurrentWeapon() << '\n';
 
     std::cout << '\n';
 
-    std::cout << "Current Magic: " << player.getCurrentMagic() << '\n';
+    std::cout << "Equipped Magic: " << player.getCurrentMagic() << '\n';
 
     std::cout << '\n';
 
