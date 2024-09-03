@@ -78,7 +78,7 @@ int main()
     
 
     //adding the weapon to the player's inventory
-    player.addWeapon(firstWeapon, 1, 2);
+    player.addWeapon(firstWeapon, 100, 101);
 
     //setting the player's current weapon to the first weapon
     player.setCurrentWeapon(firstWeapon);
@@ -310,6 +310,8 @@ void fight(std::vector<int> &playerPosition) {
     int aliveEnemies{countEnemies(enemiesToFight)};
     int turnsLeft{2};
 
+    int enemiesFell{};
+
 	while (aliveEnemies > 0) {
         //drawing the ascii enemies
         drawEnemies(enemiesToFight);
@@ -475,6 +477,11 @@ void fight(std::vector<int> &playerPosition) {
 
                     std::cout << "You have dealt " << attackDamage << " damage to the " << enemiesToFight[enemyToAttack].getName() << '\n';
 
+                    if (enemiesToFight[enemyToAttack].getHealthPoints() <= 0) {
+						enemiesToFight.erase(enemiesToFight.begin() + enemyToAttack);
+                        enemiesFell++;
+                    }
+
                     std::this_thread::sleep_for(std::chrono::seconds(2));
 
                 }
@@ -509,6 +516,11 @@ void fight(std::vector<int> &playerPosition) {
                     std::cout << '\n';
 
                     std::cout << "You have dealt " << attackDamage << " damage to the " << enemiesToFight[enemyToAttack].getName() << '\n';
+
+                    if (enemiesToFight[enemyToAttack].getHealthPoints() <= 0) {
+                        enemiesToFight.erase(enemiesToFight.begin() + enemyToAttack);
+                        enemiesFell++;
+                    }
 
                     std::this_thread::sleep_for(std::chrono::seconds(2));
                 }
@@ -606,16 +618,30 @@ void fight(std::vector<int> &playerPosition) {
 
     std::cout << "All enemies have been defeated...\n";
 
-    int numItems = getRand(1, 2);
+    //int numItems = getRand(1, 2);
 
-    for (auto& item: player.getItems()) {
+    for (int i = 0; i < enemiesFell;i++) {
         int itemChoice = getRand(0, (int)pickupableItems.size() - 1);
 
-		std::cout << "You have found a " << pickupableItems[itemChoice].name << "...\n";
+		if (pickupableItems[itemChoice].name == "Throwing Knives")
+		    std::cout << "You have found " << pickupableItems[itemChoice].name << "...\n";
+        else
+			std::cout << "You have found a " << pickupableItems[itemChoice].name << "...\n";
+        
 
-        
-        
-        
+        bool itemFound = false;
+
+		for(auto& item : player.getItems()){
+			if (item.name == pickupableItems[itemChoice].name) {
+				item.amount++;
+                itemFound = true;
+				break;
+			}
+		}
+
+        if (!itemFound) {
+            player.addItem(pickupableItems[itemChoice].name, pickupableItems[itemChoice].amount, pickupableItems[itemChoice].damage, pickupableItems[itemChoice].healAmount);
+        }
     }
 
     std::cout << '\n';

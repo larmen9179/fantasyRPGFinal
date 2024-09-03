@@ -42,7 +42,7 @@ private:
 	//players inventory
 	std::unordered_map<std::string, Weapon> weapons;
 	std::unordered_map<std::string, Weapon> magic;
-	std::unordered_map<std::string, Item> items;
+	std::vector<Item> items;
 	
 	//storing the player's currently equipped items
 	std::string currentWeapon;
@@ -63,7 +63,7 @@ public:
 	std::vector<std::vector<bool>> getHasBeen() const;
 	Weapon getWeapon(const std::string &nameIn);
 	Weapon getMagic(const std::string &nameIn);
-	std::unordered_map<std::string, Item> getItems();
+	std::vector<Item> getItems();
 	std::string getCurrentWeapon() const;
 	std::string getCurrentMagic() const;
 

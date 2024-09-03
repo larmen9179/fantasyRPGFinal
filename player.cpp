@@ -69,7 +69,7 @@ Weapon Player::getMagic(const std::string &nameIn){
 	return this->magic[nameIn];
 }
 
-std::unordered_map<std::string, Item> Player::getItems(){
+std::vector<Item> Player::getItems(){
 	return this->items;
 }
 
@@ -157,7 +157,7 @@ void Player::showItems(){
 	else{
 		std::cout << "Items: \n";
 		for (auto& item : this->items) {
-			std::cout << item.first << " - Amount: " << item.second.amount << '\n';
+			std::cout << item.name << " - Amount: " << item.amount << '\n';
 		}
 	}
 }
@@ -182,7 +182,7 @@ void Player::addMagic(std::string &nameIn, int minDmgIn, int maxDmgIn){
 }
 
 void Player::addItem(std::string &nameIn, int amountIn, int damageIn, int healAmountIn){
-	this->items[nameIn] = Item(nameIn, amountIn, damageIn, healAmountIn);
+	this->items.push_back(Item(nameIn, amountIn, damageIn, healAmountIn));
 }
 
 void Player::takeDamage(int damageIn){
