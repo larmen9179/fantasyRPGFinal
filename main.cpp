@@ -44,7 +44,7 @@ Player player("Roghbradden", dungeon);
 std::vector<Weapon> pickupableWeapons = {Weapon("crossbow", 6, 11), Weapon("axe", 4, 8), Weapon("sword", 2, 5)};
 std::vector<Weapon> pickupableMagic = {Weapon("icestorm", 3, 12), Weapon("fireball", 1, 3), Weapon("lightning", 2,9), };
 
-std::vector<Item> pickupableItems = {Item("Health Potion", 1, 0), Item("Smokebomb", 1, 0), Item("Throwing Knives", 1, 15) };
+std::vector<Item> pickupableItems = {Item("Health Potion", 1, 0, 7), Item("Smokebomb", 1, 0, 0), Item("Throwing Knives", 1, 15, 0)};
 
 //clonable enemy objects
 std::vector<Enemy> enemies;
