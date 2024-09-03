@@ -8,7 +8,7 @@ Weapon::Weapon(const std::string& nameIn, const int minDmgIn, const int maxDmgIn
 Weapon::Weapon() {}
 
 //item struct
-Item::Item(const std::string& nameIn, const int amountIn, const int damageIn, const int healAmountIn)
+Item::Item(const std::string& nameIn, int amountIn, int damageIn, int healAmountIn)
 	: name(nameIn), amount(amountIn), damage(damageIn), healAmount(healAmountIn)
 {}
 
@@ -67,6 +67,10 @@ Weapon Player::getWeapon(const std::string &nameIn){
 
 Weapon Player::getMagic(const std::string &nameIn){
 	return this->magic[nameIn];
+}
+
+std::unordered_map<std::string, Item> Player::getItems(){
+	return this->items;
 }
 
 std::string Player::getCurrentWeapon() const {
@@ -175,6 +179,10 @@ void Player::addWeapon(std::string &nameIn, int minDmgIn, int maxDmgIn){
 void Player::addMagic(std::string &nameIn, int minDmgIn, int maxDmgIn){
 	
 	this->magic[nameIn] = Weapon(nameIn, minDmgIn, maxDmgIn);
+}
+
+void Player::addItem(std::string &nameIn, int amountIn, int damageIn, int healAmountIn){
+	this->items[nameIn] = Item(nameIn, amountIn, damageIn, healAmountIn);
 }
 
 void Player::takeDamage(int damageIn){

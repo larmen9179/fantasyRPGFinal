@@ -606,6 +606,18 @@ void fight(std::vector<int> &playerPosition) {
 
     std::cout << "All enemies have been defeated...\n";
 
+    int numItems = getRand(1, 2);
+
+    for (auto& item: player.getItems()) {
+        int itemChoice = getRand(0, (int)pickupableItems.size() - 1);
+
+		std::cout << "You have found a " << pickupableItems[itemChoice].name << "...\n";
+
+        
+        
+        
+    }
+
     std::cout << '\n';
     std::cout << "Type \"Enter\" to continue...\n";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

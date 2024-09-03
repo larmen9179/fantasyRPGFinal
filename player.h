@@ -23,7 +23,7 @@ struct Item {
 	int damage;
 	int healAmount;
 
-	Item(const std::string& nameIn, const int amountIn, const int damageIn, const int healAmountIn);
+	Item(const std::string& nameIn, int amountIn, int damageIn, int healAmountIn);
 	Item();
 };
 
@@ -63,6 +63,7 @@ public:
 	std::vector<std::vector<bool>> getHasBeen() const;
 	Weapon getWeapon(const std::string &nameIn);
 	Weapon getMagic(const std::string &nameIn);
+	std::unordered_map<std::string, Item> getItems();
 	std::string getCurrentWeapon() const;
 	std::string getCurrentMagic() const;
 
@@ -89,6 +90,7 @@ public:
 
 	void addWeapon(std::string &nameIn, int minDmgIn, int maxDmgIn);
 	void addMagic(std::string &nameIn, int minDmgIn, int maxDmgIn);
+	void addItem(std::string &nameIn, int amountIn, int damageIn, int healAmountIn);
 
 	void takeDamage(int damageIn);
 	
