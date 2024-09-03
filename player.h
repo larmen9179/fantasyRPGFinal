@@ -63,7 +63,7 @@ public:
 	std::vector<std::vector<bool>> getHasBeen() const;
 	Weapon getWeapon(const std::string &nameIn);
 	Weapon getMagic(const std::string &nameIn);
-	std::vector<Item> getItems();
+	std::vector<Item> & getItems();
 	std::string getCurrentWeapon() const;
 	std::string getCurrentMagic() const;
 

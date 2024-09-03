@@ -69,7 +69,7 @@ Weapon Player::getMagic(const std::string &nameIn){
 	return this->magic[nameIn];
 }
 
-std::vector<Item> Player::getItems(){
+std::vector<Item> & Player::getItems(){
 	return this->items;
 }
 
@@ -155,7 +155,6 @@ void Player::showItems(){
 				std::cout << "You have no items...\n";
 	}
 	else{
-		std::cout << "Items: \n";
 		for (auto& item : this->items) {
 			std::cout << item.name << " - Amount: " << item.amount << '\n';
 		}
