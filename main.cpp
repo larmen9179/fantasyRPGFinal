@@ -113,6 +113,11 @@ int getRand(int min, int max) {
 	return dis(gen);
 }
 
+void printPlayerStats() {
+    std::cout << "Current Health: " << player.getHealthPoints() << '\n';
+    std::cout << "Total Gold: " << gold << '\n';
+}
+
 void eventHandler(const std::vector<int> &playerPosition){
 
     //weapon room (for gaining new weapons)
@@ -268,8 +273,7 @@ void gameLoop() {
         std::vector<bool> possibleMoves = moveFinder(playerPosition);
 
         //printing player stats
-        std::cout << "Current Health: " << player.getHealthPoints() << '\n';
-        std::cout << "Total Gold: " << gold << '\n';
+		printPlayerStats();
 
         //prompting for user input
         std::cout << "Enter a command or type 'help' for a list of commands...\n";
@@ -802,10 +806,27 @@ void inputHandler(std::string& userInput, std::vector<int>& playerPosition, std:
         showInventory();
     }
     else if (userInput == "c") {
-        std::cout << "Change Equipment: \n";
-        std::cout << "Enter a command to change equipment: \n";
-        std::cout << "w - change weapon";
-        std::cout << "m - change magic";
+
+        showInventory();
+
+
+        changeE:
+            std::cout << "Change Equipment: \n";
+
+            std::cout << '\n';
+
+            std::cout << "Enter a command to change equipment: \n";
+            std::cout << "w - change weapon\n";
+            std::cout << "m - change magic\n";
+			std::cout << "g - go back\n";
+			std::cout << '\n';
+
+			std::cin >> userInput;
+
+            if (userInput == "w") {
+
+            }
+
     }
     else if (userInput == "e") {
         std::cout << "Exiting program...\n";

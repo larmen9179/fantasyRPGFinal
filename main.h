@@ -11,6 +11,7 @@ void gameLoop();
 void inputHandler(std::string& userInput, std::vector<int>& playerPosition, std::vector<bool> &possibleMoves);
 void fight(std::vector<int> &playerPosition);
 void drawEnemies(std::vector<Enemy> &enemiesToFight);
+void printPlayerStats();
 
 //------------------------
 std::vector<int> playerStart();
