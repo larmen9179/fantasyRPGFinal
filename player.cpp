@@ -86,6 +86,10 @@ std::string Player::getCurrentMagic() const {
 	return this->currentMagic;
 }
 
+std::unordered_map<std::string, Weapon> & Player::getWeapons(){
+	return this->weapons;
+}
+
 //setters
 void Player::setName(const std::string &nameIn) {
 	this->name = nameIn;

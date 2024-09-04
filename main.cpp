@@ -41,9 +41,8 @@ std::vector<std::vector<std::string>> dungeon =
 //global player object
 Player player("Roghbradden", dungeon); 
 
-std::vector<Weapon> pickupableWeapons = {Weapon("crossbow", 6, 11), Weapon("axe", 4, 8), Weapon("sword", 2, 5)};
-std::vector<Weapon> pickupableMagic = {Weapon("icestorm", 3, 12), Weapon("fireball", 1, 3), Weapon("lightning", 2,9), };
-
+std::vector<Weapon> pickupableWeapons = {Weapon("Crossbow", 6, 11), Weapon("Axe", 4, 8), Weapon("Sword", 2, 5)};
+std::vector<Weapon> pickupableMagic = {Weapon("Icestorm", 3, 12), Weapon("Lightning", 2,9), Weapon("Fireball", 1, 3) };
 std::vector<Item> pickupableItems = {Item("Health Potion", 1, 0, 7), Item("Smokebomb", 1, 0, 0), Item("Throwing Knives", 1, 15, 0)};
 
 //clonable enemy objects
@@ -94,11 +93,110 @@ int main()
 
     //--------------------------------------------
    
+    /*
+    //temporarily storing the Enemy ascii art as a vector of strings
+    std::vector<std::string> enemyPiss = {
+        "                                   @@@                ",
+        "    @@@@@@@@@@                 @@@@@                  ", 
+        "     @@       @@@@          @@  @@@                   ", 
+        "       @@@@@@@   @@@ @@@@@@@@  @@@@                   ",
+        "           @@@@@@@@@    @@@    @@@                    ",
+        "             @@%#@%.@@ @@:@  @@@                      ",
+        "                @*- @==#-===@@@                       ",
+        "  @%             @+===+=+-+@@                         ",
+        "  @=%             #@@+**@@@                           ",
+        " @@#==            @@@##@@@@@                          ",
+        "  #*:           @@@#%@      @                         ",
+        "   #+.          @@ @##   ###                          ",
+        "    #--        @@#@ @##@ ###%#                        ",
+        "    @*:.        ###@@ ####   @                        ",
+        "    #%*##%     #%@#   #%##@   @@                      ",
+        "  *#@@@    ###   @###@@####@    @                     ",
+        "     @@#@@@     @@@@@   #@@@    @@  @                 ",
+        "       @@@      @                @@@@                 ",
+        "       @@@     @@    @@##                             ",
+        "                   ##@ @##                            ",
+        "                  ##@   @##@@##                       ",
+        "                ##%@@   @@@@                          ",
+        "                  ##       @                          ",
+        "                   ##      @@                         ",
+        "                    #@       @                        ",
+        "                 @@@#@@                               ",
+        "            @@@@              @@                      ",
+        "             @@@@@@@@@@@      @@                      ",
+        "                               @@@@@@@                ",
+        "                                                      "
+    };
 
-    //creating enemies to clone for encounters
-    enemies.push_back(Enemy("Goblin", 5, 1));
-    enemies.push_back(Enemy("Hivemind", 10, 2));
-    enemies.push_back(Enemy("Drake", 8, 1));
+    //temporarily storing the Enemy ascii art as a raw string literal
+    enemies.push_back(Enemy("Goblin", 5, 1, R"(
+                                   @@@                
+    @@@@@@@@@@                 @@@@@                  
+     @@       @@@@          @@  @@@                   
+       @@@@@@@   @@@ @@@@@@@@  @@@@                   
+           @@@@@@@@@    @@@    @@@                    
+             @@%#@%.@@ @@:@  @@@                      
+                @*- @==#-===@@@                       
+  @%             @+===+=+-+@@                         
+  @=%             #@@+**@@@                           
+ @@#==            @@@##@@@@@                          
+  #*:           @@@#%@      @                         
+   #+.          @@ @##   ###                          
+    #--        @@#@ @##@ ###%#                        
+    @*:.        ###@@ ####   @                        
+    #%*##%     #%@#   #%##@   @@                      
+  *#@@@    ###   @###@@####@    @                     
+     @@#@@@     @@@@@   #@@@    @@  @                 
+       @@@      @                @@@@                 
+       @@@     @@    @@##                             
+                   ##@ @##                            
+                  ##@   @##@@##                       
+                ##%@@   @@@@                          
+                  ##       @                          
+                   ##      @@                         
+                    #@       @                        
+                 @@@#@@                               
+            @@@@              @@                      
+             @@@@@@@@@@@      @@                      
+                               @@@@@@@                
+                                                      )"));
+     */
+
+    //adding the enemies to the enemies vector
+    enemies.push_back(Enemy("Goblin", 5, 1, {
+        "                                   @@@                ",
+        "    @@@@@@@@@@                 @@@@@                  ",
+        "     @@       @@@@          @@  @@@                   ",
+        "       @@@@@@@   @@@ @@@@@@@@  @@@@                   ",
+        "           @@@@@@@@@    @@@    @@@                    ",
+        "             @@%#@%.@@ @@:@  @@@                      ",
+        "                @*- @==#-===@@@                       ",
+        "  @%             @+===+=+-+@@                         ",
+        "  @=%             #@@+**@@@                           ",
+        " @@#==            @@@##@@@@@                          ",
+        "  #*:           @@@#%@      @                         ",
+        "   #+.          @@ @##   ###                          ",
+        "    #--        @@#@ @##@ ###%#                        ",
+        "    @*:.        ###@@ ####   @                        ",
+        "    #%*##%     #%@#   #%##@   @@                      ",
+        "  *#@@@    ###   @###@@####@    @                     ",
+        "     @@#@@@     @@@@@   #@@@    @@  @                 ",
+        "       @@@      @                @@@@                 ",
+        "       @@@     @@    @@##                             ",
+        "                   ##@ @##                            ",
+        "                  ##@   @##@@##                       ",
+        "                ##%@@   @@@@                          ",
+        "                  ##       @                          ",
+        "                   ##      @@                         ",
+        "                    #@       @                        ",
+        "                 @@@#@@                               ",
+        "            @@@@              @@                      ",
+        "             @@@@@@@@@@@      @@                      ",
+        "                               @@@@@@@                ",
+        "                                                      "
+        }));
+    enemies.push_back(Enemy("Merman", 10, 3, {}));
+    enemies.push_back(Enemy("Kobold", 8, 1, {}));
 
     //calling the main game loop
     gameLoop();
@@ -306,7 +404,7 @@ void fight(std::vector<int> &playerPosition) {
 
         std::cout << "You have encountered a " << enemies[enemyChoice].getName() << "...\n";
 
-        enemiesToFight.push_back(Enemy(enemies[enemyChoice].getName(), enemies[enemyChoice].getHealthPoints(), enemies[enemyChoice].getDamage()));
+        enemiesToFight.push_back(Enemy(enemies[enemyChoice].getName(), enemies[enemyChoice].getHealthPoints(), enemies[enemyChoice].getDamage(), enemies[enemyChoice].getImage()));
 	}
 
     std::cout << '\n';
@@ -622,8 +720,6 @@ void fight(std::vector<int> &playerPosition) {
 
     std::cout << "All enemies have been defeated...\n";
 
-    //int numItems = getRand(1, 2);
-
     for (int i = 0; i < enemiesFell;i++) {
         int itemChoice = getRand(0, (int)pickupableItems.size() - 1);
 
@@ -678,11 +774,17 @@ void drawEnemies(std::vector<Enemy> &enemiesToFight) {
     }
 
     std::cout << '\n';
-    std::cout << "ascii enemies go here \n";
-    std::cout << '\n';
 
+    std::vector<std::string> enemyArt;
+
+
+
+    //printing the enemies names and health values
     for(int i = 0; i < enemiesToFight.size(); i++) {
-        if(enemiesToFight[i].getHealthPoints() > 0)
+        if (enemiesToFight[i].getHealthPoints() > 0)
+            
+            std::cout << '\n';
+
 		    std::cout << enemiesToFight[i].getName() << " - " << enemiesToFight[i].getHealthPoints() << "     ";
 	}
 
@@ -809,6 +911,7 @@ void inputHandler(std::string& userInput, std::vector<int>& playerPosition, std:
 
         showInventory();
 
+        goto changeE; 
 
         changeE:
             std::cout << "Change Equipment: \n";
@@ -824,7 +927,34 @@ void inputHandler(std::string& userInput, std::vector<int>& playerPosition, std:
 			std::cin >> userInput;
 
             if (userInput == "w") {
+                std::cout << '\n';
+                std::cout << "Equip which weapon? \n";
+                std::cout << '\n';
 
+                for (auto& weapon : player.getWeapons()) {
+                    std::cout << weapon.first << '\n';
+                }
+
+                std::cout << '\n';
+
+                std::cin >> userInput;
+
+                if (player.getWeapons().find(userInput) != player.getWeapons().end()) {
+					player.setCurrentWeapon(userInput);
+					std::cout << "You have equipped the " << userInput << "...\n";
+				}
+				else {
+					std::cout << "Invalid weapon. Please try again...\n";
+					std::cout << "Type \"Enter\" to continue...\n";
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					std::cin.get();
+
+                    clearScreen();
+                    printDungeon(playerPosition);
+                    printPlayerStats();
+
+					goto changeE;
+				}
             }
 
     }

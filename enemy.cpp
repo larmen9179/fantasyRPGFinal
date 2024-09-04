@@ -2,10 +2,11 @@
 #include "enemy.h"
 
 //constructors
-Enemy::Enemy(const std::string& nameIn, const int healthPointsIn, const int damageIn) {
+Enemy::Enemy(const std::string& nameIn, const int healthPointsIn, const int damageIn, const std::vector<std::string> &imageIn) {
 	this->name = nameIn;
 	this->healthPoints = healthPointsIn;
 	this->damage = damageIn;
+	this->image = imageIn;
 }
 
 //getters
@@ -21,6 +22,10 @@ int Enemy::getDamage() const {
 	return this->damage;
 }
 
+std::vector<std::string> Enemy::getImage() const {
+	return this->image;
+}
+
 //setters
 void Enemy::setName(const std::string& nameIn) {
 	this->name = nameIn;
@@ -32,6 +37,10 @@ void Enemy::setHealthPoints(const int healthPointsIn) {
 
 void Enemy::setDamage(const int damageIn) {
 	this->damage = damageIn;
+}
+
+void Enemy::setImage(const std::vector<std::string> &imageIn) {
+	this->image = imageIn;
 }
 
 //methods
