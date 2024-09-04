@@ -2,10 +2,11 @@
 #include "enemy.h"
 
 //constructors
-Enemy::Enemy(const std::string& nameIn, const int healthPointsIn, const int damageIn, const std::vector<std::string> &imageIn) {
+Enemy::Enemy(const std::string& nameIn, const int healthPointsIn, const int minDamageIn, const int maxDamageIn, const std::vector<std::string> &imageIn) {
 	this->name = nameIn;
 	this->healthPoints = healthPointsIn;
-	this->damage = damageIn;
+	this->minDamage = minDamageIn;
+	this->maxDamage = maxDamageIn;
 	this->image = imageIn;
 }
 
@@ -18,8 +19,12 @@ int Enemy::getHealthPoints() const {
 	return this->healthPoints;
 }
 
-int Enemy::getDamage() const {
-	return this->damage;
+int Enemy::getMinDamage() const {
+	return this->minDamage;
+}
+
+int Enemy::getMaxDamage() const {
+	return this->maxDamage;
 }
 
 std::vector<std::string> Enemy::getImage() const {
@@ -35,8 +40,12 @@ void Enemy::setHealthPoints(const int healthPointsIn) {
 	this->healthPoints = healthPointsIn;
 }
 
-void Enemy::setDamage(const int damageIn) {
-	this->damage = damageIn;
+void Enemy::setMinDamage(const int minDamageIn) {
+	this->minDamage = minDamageIn;
+}
+
+void Enemy::setMaxDamage(const int maxDamageIn) {
+	this->maxDamage = maxDamageIn;
 }
 
 void Enemy::setImage(const std::vector<std::string> &imageIn) {

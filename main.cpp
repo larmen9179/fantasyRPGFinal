@@ -163,7 +163,7 @@ int main()
      */
 
     //adding the enemies to the enemies vector
-    enemies.push_back(Enemy("Goblin", 5, 1, {
+    enemies.push_back(Enemy("Goblin", 5, 1, 3{
         "                                   @@@                ",
         "    @@@@@@@@@@                 @@@@@                  ",
         "     @@       @@@@          @@  @@@                   ",
@@ -195,8 +195,68 @@ int main()
         "                               @@@@@@@                ",
         "                                                      "
         }));
-    enemies.push_back(Enemy("Merman", 10, 3, {}));
-    enemies.push_back(Enemy("Kobold", 8, 1, {}));
+    enemies.push_back(Enemy("Merman", 4, 9, { 
+        "                                   @@@                ",
+        "    @@@@@@@@@@                 @@@@@                  ",
+        "     @@       @@@@          @@  @@@                   ",
+        "       @@@@@@@   @@@ @@@@@@@@  @@@@                   ",
+        "           @@@@@@@@@    @@@    @@@                    ",
+        "             @@%#@%.@@ @@:@  @@@                      ",
+        "                @*- @==#-===@@@                       ",
+        "  @%             @+===+=+-+@@                         ",
+        "  @=%             #@@+**@@@                           ",
+        " @@#==            @@@##@@@@@                          ",
+        "  #*:           @@@#%@      @                         ",
+        "   #+.          @@ @##   ###                          ",
+        "    #--        @@#@ @##@ ###%#                        ",
+        "    @*:.        ###@@ ####   @                        ",
+        "    #%*##%     #%@#   #%##@   @@                      ",
+        "  *#@@@    ###   @###@@####@    @                     ",
+        "     @@#@@@     @@@@@   #@@@    @@  @                 ",
+        "       @@@      @                @@@@                 ",
+        "       @@@     @@    @@##                             ",
+        "                   ##@ @##                            ",
+        "                  ##@   @##@@##                       ",
+        "                ##%@@   @@@@                          ",
+        "                  ##       @                          ",
+        "                   ##      @@                         ",
+        "                    #@       @                        ",
+        "                 @@@#@@                               ",
+        "            @@@@              @@                      ",
+        "             @@@@@@@@@@@      @@                      ",
+        "                               @@@@@@@                ",
+        "                                                      " }));
+    enemies.push_back(Enemy("Kobold", 2, 6, { 
+        "                                   @@@                ",
+        "    @@@@@@@@@@                 @@@@@                  ",
+        "     @@       @@@@          @@  @@@                   ",
+        "       @@@@@@@   @@@ @@@@@@@@  @@@@                   ",
+        "           @@@@@@@@@    @@@    @@@                    ",
+        "             @@%#@%.@@ @@:@  @@@                      ",
+        "                @*- @==#-===@@@                       ",
+        "  @%             @+===+=+-+@@                         ",
+        "  @=%             #@@+**@@@                           ",
+        " @@#==            @@@##@@@@@                          ",
+        "  #*:           @@@#%@      @                         ",
+        "   #+.          @@ @##   ###                          ",
+        "    #--        @@#@ @##@ ###%#                        ",
+        "    @*:.        ###@@ ####   @                        ",
+        "    #%*##%     #%@#   #%##@   @@                      ",
+        "  *#@@@    ###   @###@@####@    @                     ",
+        "     @@#@@@     @@@@@   #@@@    @@  @                 ",
+        "       @@@      @                @@@@                 ",
+        "       @@@     @@    @@##                             ",
+        "                   ##@ @##                            ",
+        "                  ##@   @##@@##                       ",
+        "                ##%@@   @@@@                          ",
+        "                  ##       @                          ",
+        "                   ##      @@                         ",
+        "                    #@       @                        ",
+        "                 @@@#@@                               ",
+        "            @@@@              @@                      ",
+        "             @@@@@@@@@@@      @@                      ",
+        "                               @@@@@@@                ",
+        "                                                      " }));
 
     //calling the main game loop
     gameLoop();
@@ -404,7 +464,7 @@ void fight(std::vector<int> &playerPosition) {
 
         std::cout << "You have encountered a " << enemies[enemyChoice].getName() << "...\n";
 
-        enemiesToFight.push_back(Enemy(enemies[enemyChoice].getName(), enemies[enemyChoice].getHealthPoints(), enemies[enemyChoice].getDamage(), enemies[enemyChoice].getImage()));
+        enemiesToFight.push_back(Enemy(enemies[enemyChoice].getName(), enemies[enemyChoice].getHealthPoints(), enemies[enemyChoice].getMinDamage(), enemies[enemyChoice].getMaxDamage(), enemies[enemyChoice].getImage()));
 	}
 
     std::cout << '\n';
@@ -670,7 +730,7 @@ void fight(std::vector<int> &playerPosition) {
                 if (enemy.getHealthPoints() > 0) {
 
                     //The enemy's damage is randomized from 1 to their damage attribute
-                    int enemyDamage = getRand(1, enemy.getDamage());
+                    int enemyDamage = getRand(1, enemy.getMaxDamage());
 
                     if (enemyDamage > defenseLevel)
                         enemyDamage -= defenseLevel;
@@ -777,7 +837,17 @@ void drawEnemies(std::vector<Enemy> &enemiesToFight) {
 
     std::vector<std::string> enemyArt;
 
+    for (int i = 0; i < enemiesToFight[0].getImage().size(); i++) {
+        std::string push = "";
+		for (int j = 0; j < enemiesToFight.size(); j++) {
+			push += enemiesToFight[j].getImage()[i];
+		}
+        enemyArt.push_back(push);
+    }
 
+	for (int i = 0; i < enemyArt.size(); i++) {
+		std::cout << enemyArt[i] << '\n';
+	}
 
     //printing the enemies names and health values
     for(int i = 0; i < enemiesToFight.size(); i++) {
@@ -927,36 +997,81 @@ void inputHandler(std::string& userInput, std::vector<int>& playerPosition, std:
 			std::cin >> userInput;
 
             if (userInput == "w") {
-                std::cout << '\n';
-                std::cout << "Equip which weapon? \n";
-                std::cout << '\n';
-
-                for (auto& weapon : player.getWeapons()) {
-                    std::cout << weapon.first << '\n';
-                }
-
-                std::cout << '\n';
-
-                std::cin >> userInput;
-
-                if (player.getWeapons().find(userInput) != player.getWeapons().end()) {
-					player.setCurrentWeapon(userInput);
-					std::cout << "You have equipped the " << userInput << "...\n";
-				}
-				else {
-					std::cout << "Invalid weapon. Please try again...\n";
-					std::cout << "Type \"Enter\" to continue...\n";
-					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-					std::cin.get();
-
-                    clearScreen();
-                    printDungeon(playerPosition);
-                    printPlayerStats();
-
-					goto changeE;
-				}
+                goto weaponE;    
+            }
+            else if (userInput == "m") {
+                goto magicE;
+            }
+            else if (userInput == "g"){
+                goto end;
             }
 
+        weaponE:
+            std::cout << '\n';
+            std::cout << "Equip which weapon? \n";
+            std::cout << '\n';
+
+            for (auto& weapon : player.getWeapons()) {
+                std::cout << weapon.first << '\n';
+            }
+
+            std::cout << '\n';
+
+            std::cin >> userInput;
+
+            if (player.getWeapons().find(userInput) != player.getWeapons().end()) {
+                player.setCurrentWeapon(userInput);
+                std::cout << "You have equipped the " << userInput << "...\n";
+                goto end;
+            }
+            else {
+                std::cout << "Invalid weapon. Please try again...\n";
+                std::cout << "Type \"Enter\" to continue...\n";
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cin.get();
+
+                clearScreen();
+                printDungeon(playerPosition);
+                printPlayerStats();
+
+                goto weaponE;
+            }
+
+        magicE:
+            std::cout << '\n';
+            std::cout << "Equip which spell? \n";
+            std::cout << '\n';
+
+            for (auto& spell : player.getSpells()) {
+                std::cout << spell.first << '\n';
+            }
+
+            std::cout << '\n';
+
+            std::cin >> userInput;
+
+            if (player.getSpells().find(userInput) != player.getSpells().end()) {
+                player.setCurrentMagic(userInput);
+                std::cout << "You have equipped the " << userInput << "...\n";
+            }
+            else {
+                std::cout << "Invalid spell. Please try again...\n";
+                std::cout << "Type \"Enter\" to continue...\n";
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cin.get();
+
+                clearScreen();
+                printDungeon(playerPosition);
+                printPlayerStats();
+
+                goto magicE;
+            }
+
+        end:
+            std::cout << "Going back to menu...\n";
+            std::cout << "Type \"Enter\" to continue...\n";
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin.get();
     }
     else if (userInput == "e") {
         std::cout << "Exiting program...\n";

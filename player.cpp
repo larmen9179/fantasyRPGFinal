@@ -90,6 +90,10 @@ std::unordered_map<std::string, Weapon> & Player::getWeapons(){
 	return this->weapons;
 }
 
+std::unordered_map<std::string, Weapon>& Player::getSpells() {
+	return this->magic;
+}
+
 //setters
 void Player::setName(const std::string &nameIn) {
 	this->name = nameIn;
