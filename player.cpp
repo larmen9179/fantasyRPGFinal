@@ -192,6 +192,15 @@ void Player::addItem(std::string &nameIn, int amountIn, int damageIn, int healAm
 	this->items.push_back(Item(nameIn, amountIn, damageIn, healAmountIn));
 }
 
+void Player::heal(int healAmountIn){
+	
+	this->healthPoints += healAmountIn;
+
+	if(this->healthPoints > this->maxHealth)
+		this->healthPoints = this->maxHealth;
+	
+}
+
 void Player::takeDamage(int damageIn){
 	
 	this->healthPoints -= damageIn;

@@ -43,7 +43,7 @@ Player player("Roghbradden", dungeon);
 
 std::vector<Weapon> pickupableWeapons = {Weapon("Crossbow", 6, 11), Weapon("Axe", 4, 8), Weapon("Sword", 2, 5)};
 std::vector<Weapon> pickupableMagic = {Weapon("Icestorm", 3, 12), Weapon("Lightning", 2,9), Weapon("Fireball", 1, 3) };
-std::vector<Item> pickupableItems = {Item("Health Potion", 1, 0, 7), Item("Smokebomb", 1, 0, 0), Item("Throwing Knives", 1, 15, 0)};
+std::vector<Item> pickupableItems = {Item("Vitality Potion", 1, 0, 7), Item("Smokebomb", 1, 0, 0), Item("Throwing Knives", 1, 15, 0)};
 
 //clonable enemy objects
 std::vector<Enemy> enemies;
@@ -163,7 +163,7 @@ int main()
      */
 
     //adding the enemies to the enemies vector
-    enemies.push_back(Enemy("Goblin", 5, 1, 3{
+    enemies.push_back(Enemy("Goblin", 5, 1, 3, {
         "                                   @@@                ",
         "    @@@@@@@@@@                 @@@@@                  ",
         "     @@       @@@@          @@  @@@                   ",
@@ -195,7 +195,7 @@ int main()
         "                               @@@@@@@                ",
         "                                                      "
         }));
-    enemies.push_back(Enemy("Merman", 4, 9, { 
+    enemies.push_back(Enemy("Merman", 10, 4, 9, { 
         "                                   @@@                ",
         "    @@@@@@@@@@                 @@@@@                  ",
         "     @@       @@@@          @@  @@@                   ",
@@ -226,7 +226,7 @@ int main()
         "             @@@@@@@@@@@      @@                      ",
         "                               @@@@@@@                ",
         "                                                      " }));
-    enemies.push_back(Enemy("Kobold", 2, 6, { 
+    enemies.push_back(Enemy("Kobold", 8, 2, 6, { 
         "                                   @@@                ",
         "    @@@@@@@@@@                 @@@@@                  ",
         "     @@       @@@@          @@  @@@                   ",
@@ -504,7 +504,6 @@ void fight(std::vector<int> &playerPosition) {
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			std::cin.get();
 		}
-
 		else if (userInput == "a") {
 
             int enemyToAttack{};
@@ -709,8 +708,117 @@ void fight(std::vector<int> &playerPosition) {
 			showInventory();
 		}
         else if (userInput == "c") {
-            std::cout << "Change Equipment: \n";
-            std::cout << "Enter a command to change equipment: \n";
+            showInventory();
+
+            goto changeE;
+
+            changeE:
+                std::cout << "Change Equipment: \n";
+
+                std::cout << '\n';
+
+                std::cout << "Enter a command to change equipment: \n";
+                std::cout << "w - change weapon\n";
+                std::cout << "m - change magic\n";
+                std::cout << "g - go back\n";
+                std::cout << '\n';
+
+                std::cin >> userInput;
+
+                if (userInput == "w") {
+                    goto weaponE;
+                }
+                else if (userInput == "m") {
+                    goto magicE;
+                }
+                else if (userInput == "g") {
+                    goto end;
+                }
+                else {
+                    std::cout << "Invalid command. Please try again...\n";
+
+                    std::cout << "Type \"Enter\" to continue...\n";
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cin.get();
+
+                    clearScreen();
+                    drawEnemies(enemiesToFight);
+                    std::cout << "Current Health: " << player.getHealthPoints() << '\n';
+
+                    goto changeE;
+                }
+
+            weaponE:
+                std::cout << '\n';
+                std::cout << "Equip which weapon? \n";
+                std::cout << '\n';
+
+                for (auto& weapon : player.getWeapons()) {
+                    std::cout << weapon.first << '\n';
+                }
+
+                std::cout << '\n';
+
+                std::cin >> userInput;
+
+                if (player.getWeapons().find(userInput) != player.getWeapons().end()) {
+                    player.setCurrentWeapon(userInput);
+                    std::cout << "You have equipped the " << userInput << "...\n";
+                    goto end;
+                }
+                else {
+                    std::cout << "Invalid weapon. Please try again...\n";
+                    std::cout << "Type \"Enter\" to continue...\n";
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cin.get();
+
+                    clearScreen();
+                    drawEnemies(enemiesToFight);
+                    std::cout << "Current Health: " << player.getHealthPoints() << '\n';
+
+                    goto weaponE;
+                }
+
+            magicE:
+                std::cout << '\n';
+                std::cout << "Equip which spell? \n";
+                std::cout << '\n';
+
+                for (auto& spell : player.getSpells()) {
+                    std::cout << spell.first << '\n';
+                }
+
+                std::cout << '\n';
+
+                std::cin >> userInput;
+
+                if (player.getSpells().find(userInput) != player.getSpells().end()) {
+                    player.setCurrentMagic(userInput);
+                    std::cout << "You have equipped the " << userInput << "...\n";
+                }
+                else {
+                    std::cout << "Invalid spell. Please try again...\n";
+                    std::cout << "Type \"Enter\" to continue...\n";
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cin.get();
+
+                    clearScreen();
+                    drawEnemies(enemiesToFight);
+                    std::cout << "Current Health: " << player.getHealthPoints() << '\n';
+
+                    goto magicE;
+                }
+
+            end:
+                std::cout << "Going back to menu...\n";
+                std::cout << "Type \"Enter\" to continue...\n";
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cin.get();
+
+
+        }
+        else if (userInput == "u") {
+
         }
         else {
             std::cout << '\n';
@@ -904,6 +1012,7 @@ void inputHandler(std::string& userInput, std::vector<int>& playerPosition, std:
         std::cout << "d - move right\n";
         std::cout << "i - inventory\n";
         std::cout << "c - change equipment\n";
+        std::cout << "h - heal\n";
         std::cout << "e - exit program\n";
 
         std::cout << '\n';
@@ -1005,6 +1114,19 @@ void inputHandler(std::string& userInput, std::vector<int>& playerPosition, std:
             else if (userInput == "g"){
                 goto end;
             }
+            else {
+                std::cout << "Invalid command. Please try again...\n";
+
+                std::cout << "Type \"Enter\" to continue...\n";
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cin.get();
+
+                clearScreen();
+                printDungeon(playerPosition);
+                printPlayerStats();
+
+                goto changeE;
+            }
 
         weaponE:
             std::cout << '\n';
@@ -1077,7 +1199,42 @@ void inputHandler(std::string& userInput, std::vector<int>& playerPosition, std:
         std::cout << "Exiting program...\n";
         exit(0);
     }
-    
+
+    else if (userInput == "h") {
+        if(player.getHealthPoints() == player.getMaxHealth()) {
+			std::cout << "You are already at full health...\n";
+		}
+		else {
+            bool potionFound = false;
+
+            for(auto& item : player.getItems()) {
+				if (item.name == "Vitality Potion") {
+                    if (item.amount > 0) {
+                        item.amount--;
+                        potionFound = true;
+                        break;
+                    }
+				}
+			}
+
+            if (potionFound) {
+				int healAmount = getRand(4, 10);
+
+				player.heal(healAmount);
+
+				std::cout << "You have healed for " << healAmount << " health...\n";
+
+			}
+            else {
+                std::cout << "You don't have any Vitality Potions to use...\n";
+            }
+		}
+
+        std::cout << "Type \"Enter\" to continue...\n";
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cin.get();
+
+    }
     else {
         std::cout << "Invalid command. Please try again...\n";
         std::cout << "Type \"Enter\" to continue...\n";

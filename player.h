@@ -94,6 +94,8 @@ public:
 	void addMagic(std::string &nameIn, int minDmgIn, int maxDmgIn);
 	void addItem(std::string &nameIn, int amountIn, int damageIn, int healAmountIn);
 
+	void heal(int healAmountIn);
+
 	void takeDamage(int damageIn);
 	
 	bool hasBeenSpot(int i, int j);
