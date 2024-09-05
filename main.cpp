@@ -495,7 +495,7 @@ void fight(std::vector<int> &playerPosition) {
             std::cout << "u - use item\n";
             std::cout << "i - inventory\n";
             std::cout << "c - change equipment\n";
-			std::cout << "r - run\n";
+			std::cout << "r - run away\n";
 			
 
 			std::cout << '\n';
@@ -818,6 +818,28 @@ void fight(std::vector<int> &playerPosition) {
 
         }
         else if (userInput == "u") {
+
+            int emptyItems{};
+
+			for (auto& item : player.getItems()) {
+                if (item.amount < 1) {
+                    emptyItems++;
+                }
+			}
+
+            if (player.getItems().empty() || emptyItems == player.getItems().size()) {
+                std::cout << "You don't have any items to use...\n";
+
+                std::cout << '\n';
+
+                std::cout << "Type \"Enter\" to continue...\n";
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cin.get();
+
+            }
+            else {
+
+            }
 
         }
         else {
@@ -1370,8 +1392,6 @@ void printDungeon(std::vector<int> &playerPosition) {
             std::cout << '\n';
         }
     }
-
-    
 
     for (int i = 0; i < dungeon.size() * 2; i++) {
         std::cout << "-";
