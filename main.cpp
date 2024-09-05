@@ -837,7 +837,10 @@ void fight(std::vector<int> &playerPosition) {
                 std::cin.get();
 
             }
-            else {
+            else{
+
+                
+
 
             }
 
