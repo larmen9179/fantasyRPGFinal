@@ -802,6 +802,24 @@ void fight(std::vector<int> &playerPosition) {
 
                         std::cout << "The item you typed is one of the usable items...\n";
 
+                        std::cout << '\n';
+                        
+                        std::cout << "Type \"Enter\" to continue...\n";
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        std::cin.get();
+
+                        if (userInput == "Vitality-Potion") {
+                            
+                            int healAmount = getRand(4, 10);
+                            player.heal(healAmount);
+
+                            std::cout << "You have headled for " << healAmount << " health points...\n";
+
+                        }
+
+                        else if (userInput == "Smokebomb") {
+
+                        }
                     }
                     else {
                         std::cout << '\n';

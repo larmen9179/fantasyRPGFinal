@@ -68,6 +68,7 @@ public:
 	std::string getCurrentMagic() const;
 	std::unordered_map<std::string, Weapon> & getWeapons();
 	std::unordered_map<std::string, Weapon>& getSpells();
+	Item & getItem(const std::string &nameIn);
 
 	//------------------------
 	//setters

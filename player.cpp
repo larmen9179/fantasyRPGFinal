@@ -94,6 +94,16 @@ std::unordered_map<std::string, Weapon>& Player::getSpells() {
 	return this->magic;
 }
 
+Item & Player::getItem(const std::string &nameIn){
+	
+	for(auto& item : this->items){
+		if(item.name == nameIn){
+			return item;
+		}
+	}
+	
+}
+
 //setters
 void Player::setName(const std::string &nameIn) {
 	this->name = nameIn;
