@@ -95,13 +95,14 @@ std::unordered_map<std::string, Weapon>& Player::getSpells() {
 }
 
 Item & Player::getItem(const std::string &nameIn){
-	
-	for(auto& item : this->items){
-		if(item.name == nameIn){
-			return item;
+
+	int i;
+	for (i = 0; i < this->items.size(); i++) {
+		if (this->items[i].name == nameIn) {
+			break;
 		}
 	}
-	
+	return items[i];
 }
 
 //setters
@@ -203,12 +204,10 @@ void Player::addItem(std::string &nameIn, int amountIn, int damageIn, int healAm
 }
 
 void Player::heal(int healAmountIn){
-	
 	this->healthPoints += healAmountIn;
 
 	if(this->healthPoints > this->maxHealth)
 		this->healthPoints = this->maxHealth;
-	
 }
 
 void Player::takeDamage(int damageIn){

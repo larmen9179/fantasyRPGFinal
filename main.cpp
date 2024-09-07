@@ -98,7 +98,11 @@ int main()
     //Testing logic for items
 
     std::string firstItem = "Throwing-Knives";
+    std::string secondItem = "Vitality-Potion";
+    std::string thirdItem = "Smokebomb";
     player.addItem(firstItem, 1, 15, 0);
+    player.addItem(secondItem, 1, 0, 7);
+    player.addItem(thirdItem, 1, 0, 0);
 
     //--------------------------------------------
 
@@ -129,7 +133,7 @@ int main()
      */
 
     //adding the enemies to the enemies vector
-    enemies.push_back(Enemy("Goblin", 5, 1, 3, {
+    enemies.push_back(Enemy("Goblin", 5, 1, 2, {
         "                                        ",
         "                             %%         ",
         "         %%%%%%%%        %%%%           ",
@@ -152,7 +156,7 @@ int main()
         "                                        "
         }));
 
-    enemies.push_back(Enemy("Merman", 10, 4, 9, {
+    enemies.push_back(Enemy("Merman", 10, 3, 6, {
         "                                        ",
         "                             %%         ",
         "         %%%%%%%%        %%%%           ",
@@ -175,7 +179,7 @@ int main()
         "                                        "
         }));
 
-    enemies.push_back(Enemy("Kobold", 8, 2, 6, {
+    enemies.push_back(Enemy("Kobold", 8, 2, 4, {
         "                                        ",
         "                             %%         ",
         "         %%%%%%%%        %%%%           ",
@@ -778,7 +782,6 @@ void fight(std::vector<int> &playerPosition) {
 
             }
             else{
-                
                     
                 itemChoice:
                     std::cout << '\n';
@@ -800,25 +803,39 @@ void fight(std::vector<int> &playerPosition) {
                        
                     if (std::find(usableItems.begin(), usableItems.end(), userInput) != usableItems.end()) {
 
-                        std::cout << "The item you typed is one of the usable items...\n";
-
-                        std::cout << '\n';
-                        
-                        std::cout << "Type \"Enter\" to continue...\n";
-                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                        std::cin.get();
-
                         if (userInput == "Vitality-Potion") {
                             
-                            int healAmount = getRand(4, 10);
-                            player.heal(healAmount);
 
-                            std::cout << "You have headled for " << healAmount << " health points...\n";
+                            if (player.getHealthPoints() == player.getMaxHealth())
+                                std::cout << "You are already at full health...";
+                            else {
+                                turnsLeft--;
+                                int healAmount = getRand(4, 10);
+                                player.getItem("Vitality-Potion").amount--;
+                                player.heal(healAmount);
+                                std::cout << "You have healed for " << healAmount << " health points...\n";
+                            }
+
+                            std::cout << '\n';
+
+                            std::cout << "Type \"Enter\" to continue...\n";
+                            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            std::cin.get();
 
                         }
 
                         else if (userInput == "Smokebomb") {
+                            ran = true;
+                            std::cout << "You use a smokebomb to escape...\n";
+                            std::this_thread::sleep_for(std::chrono::seconds(2));
+                            std::cout << "You have successfully ran away...\n";
+                            
+                            std::cout << '\n';
 
+                            std::cout << "Type \"Enter\" to continue...\n";
+                            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            std::cin.get();
+                            break;
                         }
                     }
                     else {
