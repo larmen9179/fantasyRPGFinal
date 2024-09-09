@@ -12,6 +12,7 @@ void inputHandler(std::string& userInput, std::vector<int>& playerPosition, std:
 void fight(std::vector<int> &playerPosition);
 void drawEnemies(std::vector<Enemy> &enemiesToFight);
 void printPlayerStats();
+void drawWeapon(std::vector<std::string>& weaponImage);
 
 //------------------------
 std::vector<int> playerStart();

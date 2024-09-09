@@ -41,9 +41,62 @@ std::vector<std::vector<std::string>> dungeon =
 //global player object
 Player player("Roghbradden", dungeon); 
 
-std::vector<Weapon> pickupableWeapons = {Weapon("Crossbow", 6, 11), Weapon("Axe", 4, 8), Weapon("Sword", 2, 5)};
-std::vector<Weapon> pickupableMagic = {Weapon("Icestorm", 3, 12), Weapon("Lightning", 2,9), Weapon("Fireball", 1, 3) };
-std::vector<Item> pickupableItems = {Item("Vitality-Potion", 1, 0, 7), Item("Smokebomb", 1, 0, 0), Item("Throwing-Knives", 1, 15, 0)};
+std::vector<Weapon> pickupableWeapons = { Weapon("Crossbow", 6, 11, {}), Weapon("Axe", 4, 8, {
+    "                                                ",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+	"                                                "
+    }), Weapon("Sword", 2, 5, {
+    "                                                ",
+    "                                               #",
+    "                                             ###",
+    "                                          **#%  ",
+    "                                        +++#%   ",
+    "                                      +=+*#%    ",
+    "                                    *=+###      ",
+    "                                  *=*####       ",
+    "                                ++*##**         ",
+    "                              #+**##+           ",
+    "                            *+++**+             ",
+    "                           ++***+               ",
+    "                         +++#++                 ",
+    "                       *++#*++                  ",
+    "                     *++###*                    ",
+    "                   *++*%#*                      ",
+    "                  **#***                        ",
+    "         ==+*  #******                          ",
+    "           #+##*#**#                            ",
+    "            @#*#*#                              ",
+    "           @@@@#+=@                             ",
+    "         @@%#@  @==+                            ",
+    "        %%#%      **                            ",
+    "     %##%@                                      ",
+    "     #*+*                                       ",
+    "                                                "
+    })};
+std::vector<Weapon> pickupableMagic = {Weapon("Icestorm", 3, 12, {}), Weapon("Lightning", 2,9, {}), Weapon("Fireball", 1, 3, {})};
+std::vector<Item> pickupableItems = {Item("Vitality-Potion", 1, 0, 7, {}), Item("Smokebomb", 1, 0, 0, {}), Item("Throwing-Knives", 1, 15, 0, {})};
 
 //clonable enemy objects
 std::vector<Enemy> enemies;
@@ -77,7 +130,7 @@ int main()
     
 
     //adding the weapon to the player's inventory
-    player.addWeapon(firstWeapon, 100, 101);
+    player.addWeapon(firstWeapon, 100, 101, {});
 
     //setting the player's current weapon to the first weapon
     player.setCurrentWeapon(firstWeapon);
@@ -87,7 +140,7 @@ int main()
     //Testing logic for magic attacks
 
     std::string firstMagic = "Fireball";
-    player.addMagic(firstMagic, 1, 3);
+    player.addMagic(firstMagic, 1, 3, {});
     
     player.setCurrentMagic(firstMagic);
 
@@ -100,35 +153,41 @@ int main()
     std::string firstItem = "Throwing-Knives";
     std::string secondItem = "Vitality-Potion";
     std::string thirdItem = "Smokebomb";
-    player.addItem(firstItem, 1, 15, 0);
-    player.addItem(secondItem, 1, 0, 7);
-    player.addItem(thirdItem, 1, 0, 0);
+    player.addItem(firstItem, 1, 15, 0, {});
+    player.addItem(secondItem, 1, 0, 7, {});
+    player.addItem(thirdItem, 1, 0, 0, {});
 
     //--------------------------------------------
 
     /*
 
     //temporarily storing the Enemy ascii art as a raw string literal
-    enemies.push_back(Enemy("Goblin", 5, 1, R"(                                        
-                                        
-                                  ++    
-                                  ++    
-      ##                        ++#     
-     %   ### ####             *+%       
-       %%   %%%%#%           *+%        
-     #####%% %%  ##          %+++       
-        *** **    +##        %%+++      
-            %#***++  +*%      %%%++%    
-              ##%++ +#  +*##+   +*+*#   
-             %**+ ++**#      +#  *+*+#  
-      %      %+++++*****     ++%% %+ *  
-+++%%       % ++   **%        ++*%*+ %  
- **%##+++ %%      %    %%%   **+++   %  
-  ***     %++#  ++%%#*++*   #*** %% %   
-                 **     %% %%%%%%%%%    
-                *##      %% %%          
-           **#%%%%%  *****  %           
-                                        
+    enemies.push_back(Enemy("Goblin", 5, 1, R"(                                                   
+                                                   
+                                 ##                
+                                 ####              
+                                  ##** *           
+                                  ####***          
+                                  ###****#         
+                                 ###*####**#       
+                               ####*######*+**     
+                              %%## ######=--=+     
+                             %###   ###*+=--       
+                           %%##     #*+===*        
+                         %%##      #*+=--          
+                       %%##        *==             
+                     #%##        *+=+              
+                   #%%##                           
+                  %%#                              
+                %%%#                               
+              %%###                                
+             %%##                                  
+           %%##                                    
+         %%%#                                      
+        %##                                        
+      ####                                         
+       #                                           
+                                                                                                      
 )"));
      */
 
@@ -218,6 +277,13 @@ void printPlayerStats() {
     std::cout << "Total Gold: " << gold << '\n';
 }
 
+void drawWeapon(std::vector<std::string>& weaponImage) {
+	for (auto& line : weaponImage) {
+		std::cout << line << '\n';
+	}
+    std::cout << '\n';
+}
+
 void eventHandler(const std::vector<int> &playerPosition){
 
     //weapon room (for gaining new weapons)
@@ -225,7 +291,10 @@ void eventHandler(const std::vector<int> &playerPosition){
 
         std::cout << "You have found the " << pickupableWeapons.back().name << "...\n";
 
-        player.addWeapon(pickupableWeapons.back().name, pickupableWeapons.back().minDmg, pickupableWeapons.back().maxDmg);
+        //draw weapon here
+        drawWeapon(pickupableWeapons.back().image);
+
+        player.addWeapon(pickupableWeapons.back().name, pickupableWeapons.back().minDmg, pickupableWeapons.back().maxDmg, pickupableWeapons.back().image);
 
         pickupableWeapons.pop_back();
 
@@ -238,7 +307,7 @@ void eventHandler(const std::vector<int> &playerPosition){
     else if (dungeon[playerPosition[0]][playerPosition[1]] == "t") {
 		std::cout << "You have found the " << pickupableMagic.back().name << " spell...\n";
 
-		player.addMagic(pickupableMagic.back().name, pickupableMagic.back().minDmg, pickupableMagic.back().maxDmg);
+		player.addMagic(pickupableMagic.back().name, pickupableMagic.back().minDmg, pickupableMagic.back().maxDmg, pickupableMagic.back().image);
 
 		pickupableMagic.pop_back();
 
@@ -954,7 +1023,7 @@ void fight(std::vector<int> &playerPosition) {
 		}
 
         if (!itemFound) {
-            player.addItem(pickupableItems[itemChoice].name, pickupableItems[itemChoice].amount, pickupableItems[itemChoice].damage, pickupableItems[itemChoice].healAmount);
+            player.addItem(pickupableItems[itemChoice].name, pickupableItems[itemChoice].amount, pickupableItems[itemChoice].damage, pickupableItems[itemChoice].healAmount, pickupableItems[itemChoice].image);
         }
     }
 

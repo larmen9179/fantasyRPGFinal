@@ -11,8 +11,9 @@ struct Weapon {
 	std::string name;
 	int minDmg;
 	int maxDmg;
+	std::vector<std::string> image;
 
-	Weapon(const std::string& nameIn, const int minDmgIn, const int maxDmgIn);
+	Weapon(const std::string& nameIn, const int minDmgIn, const int maxDmgIn, std::vector<std::string> imageIn);
 	Weapon();
 };
 
@@ -22,8 +23,9 @@ struct Item {
 	int amount;
 	int damage;
 	int healAmount;
+	std::vector<std::string> image;
 
-	Item(const std::string& nameIn, int amountIn, int damageIn, int healAmountIn);
+	Item(const std::string& nameIn, int amountIn, int damageIn, int healAmountIn, std::vector<std::string> imageIn);
 	Item();
 };
 
@@ -91,9 +93,9 @@ public:
 
 	bool hasMagic();
 
-	void addWeapon(std::string &nameIn, int minDmgIn, int maxDmgIn);
-	void addMagic(std::string &nameIn, int minDmgIn, int maxDmgIn);
-	void addItem(std::string &nameIn, int amountIn, int damageIn, int healAmountIn);
+	void addWeapon(std::string& nameIn, int minDmgIn, int maxDmgIn, std::vector<std::string> imageIn);
+	void addMagic(std::string &nameIn, int minDmgIn, int maxDmgIn, std::vector<std::string> imageIn);
+	void addItem(std::string &nameIn, int amountIn, int damageIn, int healAmountIn, std::vector<std::string> imageIn);
 
 	void heal(int healAmountIn);
 
