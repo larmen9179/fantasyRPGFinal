@@ -109,27 +109,27 @@ int main()
     /*
 
     //temporarily storing the Enemy ascii art as a raw string literal
-    enemies.push_back(Enemy("Goblin", 5, 1, R"(     
+    enemies.push_back(Enemy("Goblin", 5, 1, R"(                                        
                                         
-                             %%         
-         %%%%%%%%        %%%%           
-           %%%%%  % %%%%% %%%           
-               %%### %-% %%             
-                 #*++===#%              
-        %*        #%+#%%                
-        #*:       %#                    
-         *-*     % ## ***               
-          *- *   *#%#*#  %              
-        **%%% *** #*%**#  %             
-           %%%   %%    %   %%%          
-           %%%  %  *%#*                 
-                  *# %** *              
-                  *    %                
-                   *    %               
-                  %*#                   
-              %%%%       %              
-                          %%%%%         
-                                        )"));
+                                  ++    
+                                  ++    
+      ##                        ++#     
+     %   ### ####             *+%       
+       %%   %%%%#%           *+%        
+     #####%% %%  ##          %+++       
+        *** **    +##        %%+++      
+            %#***++  +*%      %%%++%    
+              ##%++ +#  +*##+   +*+*#   
+             %**+ ++**#      +#  *+*+#  
+      %      %+++++*****     ++%% %+ *  
++++%%       % ++   **%        ++*%*+ %  
+ **%##+++ %%      %    %%%   **+++   %  
+  ***     %++#  ++%%#*++*   #*** %% %   
+                 **     %% %%%%%%%%%    
+                *##      %% %%          
+           **#%%%%%  *****  %           
+                                        
+)"));
      */
 
     //adding the enemies to the enemies vector
@@ -155,50 +155,48 @@ int main()
         "                          %%%%%         ",
         "                                        "
         }));
-
     enemies.push_back(Enemy("Merman", 10, 3, 6, {
-        "                                        ",
-        "                             %%         ",
-        "         %%%%%%%%        %%%%           ",
-        "           %%%%%  % %%%%% %%%           ",
-        "               %%### %-% %%             ",
-        "                 #*++===#%              ",
-        "        %*        #%+#%%                ",
-        "        #*:       %#                    ",
-        "         *-*     % ## ***               ",
-        "          *- *   *#%#*#  %              ",
-        "        **%%% *** #*%**#  %             ",
-        "           %%%   %%    %   %%%          ",
-        "           %%%  %  *%#*                 ",
-        "                  *# %** *              ",
-        "                  *    %                ",
-        "                   *    %               ",
-        "                  %*#                   ",
-        "              %%%%       %              ",
-        "                          %%%%%         ",
-        "                                        "
+        "     ###                                ",
+        "      #  #         *#                   ",
+        "  ### ## ##     **+=                    ",
+        "  ##  ## ##   **###*+++                 ",
+        "  ##  ## #  ##       #*+==              ",
+        "  # ###   *#    #**      *+*            ",
+        "     ##  ##*            ** **           ",
+        "     ##       ###* **#*** ****          ",
+        "     ##     ##       *#  *    *         ",
+        "     ##      ########    ****  *        ",
+        "     ##       ##  **     ** #*          ",
+        "    ###**####*  *#*       ** #  *       ",
+        "     ## *      *##        *#*# #*       ",
+        "     ##  #*#    **# **#***# **###       ",
+        "     ##         ****#**#*#  ###**  #### ",
+        "     ##         #*#     **# **     #*#  ",
+        "     ##           **#   * * ***#*#**    ",
+        "     ##         **#**# #* #*##  *#*##   ",
+        "     ##         **  ## ##* #       ##   ",
+        "     ##       #*#      **  #*           "
         }));
-
     enemies.push_back(Enemy("Kobold", 8, 2, 4, {
         "                                        ",
-        "                             %%         ",
-        "         %%%%%%%%        %%%%           ",
-        "           %%%%%  % %%%%% %%%           ",
-        "               %%### %-% %%             ",
-        "                 #*++===#%              ",
-        "        %*        #%+#%%                ",
-        "        #*:       %#                    ",
-        "         *-*     % ## ***               ",
-        "          *- *   *#%#*#  %              ",
-        "        **%%% *** #*%**#  %             ",
-        "           %%%   %%    %   %%%          ",
-        "           %%%  %  *%#*                 ",
-        "                  *# %** *              ",
-        "                  *    %                ",
-        "                   *    %               ",
-        "                  %*#                   ",
-        "              %%%%       %              ",
-        "                          %%%%%         ",
+        "                                        ",
+        "                                  ++    ",
+        "                                  ++    ",
+        "      ##                        ++#     ",
+        "     %   ### ####             *+%       ",
+        "       %%   %%%%#%           *+%        ",
+        "     #####%% %%  ##          %+++       ",
+        "        *** **    +##        %%+++      ",
+        "            %#***++  +*%      %%%++%    ",
+        "              ##%++ +#  +*##+   +*+*#   ",
+        "             %**+ ++**#      +#  *+*+#  ",
+        "      %      %+++++*****     ++%% %+ *  ",
+        "+++%%       % ++   **%        ++*%*+ %  ",
+        " **%##+++ %%      %    %%%   **+++   %  ",
+        "  ***     %++#  ++%%#*++*   #*** %% %   ",
+        "                 **     %% %%%%%%%%%    ",
+        "                *##      %% %%          ",
+        "           **#%%%%%  *****  %           ",
         "                                        "
         }));
 
@@ -825,18 +823,32 @@ void fight(std::vector<int> &playerPosition) {
                         }
 
                         else if (userInput == "Smokebomb") {
+                            player.getItem("Smokebomb").amount--;
                             ran = true;
                             std::cout << "You use a smokebomb to escape...\n";
                             std::this_thread::sleep_for(std::chrono::seconds(2));
                             std::cout << "You have successfully ran away...\n";
                             
-                            std::cout << '\n';
-
-                            std::cout << "Type \"Enter\" to continue...\n";
-                            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                            std::cin.get();
                             break;
                         }
+
+                        else if (userInput == "Throwing-Knives") {
+							turnsLeft--;
+                            enemiesFell++;
+
+                            player.getItem("Throwing-Knives").amount--;
+
+							int randomEnemy = getRand(0, (int)enemiesToFight.size() - 1);
+
+                            enemiesToFight[0].setHealthPoints(0);
+
+                            std::cout << "You throw knives and kill the " << enemiesToFight[randomEnemy].getName() << "...\n";
+                            std::this_thread::sleep_for(std::chrono::milliseconds(2500));
+
+                            std::cout << '\n';
+
+						}
+
                     }
                     else {
                         std::cout << '\n';
@@ -925,7 +937,7 @@ void fight(std::vector<int> &playerPosition) {
     for (int i = 0; i < enemiesFell;i++) {
         int itemChoice = getRand(0, (int)pickupableItems.size() - 1);
 
-		if (pickupableItems[itemChoice].name == "Throwing Knives")
+		if (pickupableItems[itemChoice].name == "Throwing-Knives")
 		    std::cout << "You have found " << pickupableItems[itemChoice].name << "...\n";
         else
 			std::cout << "You have found a " << pickupableItems[itemChoice].name << "...\n";
@@ -981,9 +993,9 @@ void drawEnemies(std::vector<Enemy> &enemiesToFight) {
 
     for (int i = 0; i < enemiesToFight[0].getImage().size(); i++) {
         std::string push = "";
-		for (int j = 0; j < enemiesToFight.size(); j++) {
-			push += enemiesToFight[j].getImage()[i];
-		}
+        for (int j = 0; j < enemiesToFight.size(); j++) {
+            push += enemiesToFight[j].getImage()[i];
+        }
         enemyArt.push_back(push);
     }
 
