@@ -43,7 +43,29 @@ Player player("Roghbradden", dungeon);
 
 std::vector<Weapon> pickupableWeapons = { Weapon("Crossbow", 6, 11, {
     "                                                   ",
-    "",
+    "                  *++#                             ",
+    "                  ##==##                           ",
+    "                  ##*:  ##                         ",
+    "                   ##+--  ##                       ",
+    "                    ##*--   ##     +               ",
+    "                     ##*--     #*=+#*              ",
+    "                      ##*==*##*+=*#                ",
+    "                       ###+==-=+*# ##              ",
+    "                         #+=+++  #   ##            ",
+    "                        ===*##+===     ###         ",
+    "                        =+*####%#=--     ###       ",
+    "                      =+*###   ####*=--     ##     ",
+    "                    ==+###        #####+===== ##   ",
+    "                  ====##%             ######*****  ",
+    "                 ===+#%@                     ##    ",
+    "                ==+*#%@                            ",
+    "              ====###                              ",
+	"             ++*###                                ",
+    "           +++*##                                  ",
+    "         +++*#                                     ",
+    "        *++#                                       ",
+    "       #*+#                                        ",
+    "       #                                           ",
 	"                                                   "
     }), Weapon("Axe", 4, 8, {
     "                                                   ",
@@ -99,7 +121,95 @@ std::vector<Weapon> pickupableWeapons = { Weapon("Crossbow", 6, 11, {
     "     #*+*                                       ",
     "                                                "
     })};
-std::vector<Weapon> pickupableMagic = {Weapon("Icestorm", 3, 12, {}), Weapon("Lightning", 2,9, {}), Weapon("Fireball", 1, 3, {})};
+std::vector<Weapon> pickupableMagic = {Weapon("Icestorm", 3, 12, {
+    
+    "                                                   ",
+    "                      +  *  =                      ",
+    "                      *%%%%%#                      ",
+    "             *# +     @@@%@%@     + #*             ",
+    "             #%%#     *@@@@%#     #@%#             ",
+    "          #+ *@%@ *    %%@@#    ##%%@* **          ",
+    "      ++  %#   *%@@     *@*     @@%*   %%@ #*      ",
+    "       %@@@@@#   **##   *%*   %#*#   *@@@@@#       ",
+    "      #%%--#@@    *%**  @@@  *+%#    @@#=-#%*      ",
+    "      *##@@@+-*%%   @.*@ @ @#.@   #*=:=@@@%%#      ",
+    "          #% %@=: .*  -=@@@+:#@*. :=@@  #          ",
+    "                @%*-#@@@+*=@@@#:*%@                ",
+    "                   %@:@+=@=+@:@@                   ",
+    "                   %@:@+=@=+@:@@                   ",
+    "                @%*:*%@@+*=@@@#:*%@                ",
+    "          #% %@=: .*@ -=@@@+:#@*. :=@@  #          ",
+    "      *##@@@+-*%%   @.*@ @ @#.@   #*=:=@@@%%#      ",
+    "      #%%--#@@    *%**  @@@  *+%#    @@#=-#%*      ",
+    "       %@@@@@#   **##   *%*   %#*#   *@@@@@#       ",
+    "      ++  %#   *%@@     *@*     @@%*   %%@ #*      ",
+    "          #+ *@%@ *    %%@@#    ##%%@* **          ",
+    "             #%%#     *@@@@%#     #@%#             ",
+    "             *# +     @@@%@%@     + #*             ",
+    "                      *%%%%%#                      ",
+    "                      +  *  =                      ",
+	"                                                   "
+    
+    }), Weapon("Lightning", 2,9, {
+    
+	"												    ",
+    "                           #@                      ",
+    "                         =++@                      ",
+    "                      ===**#                       ",
+    "                      :=##+                        ",
+    "                      =:-+@                        ",
+    "                     @==*%                         ",
+    "                    @::++#=                        ",
+    "                  *#:.:++==                        ",
+    "                :==:..**=                          ",
+    "              .:=+:..-#*#                          ",
+    "              :+*....:-+**++==                     ",
+    "             ==##-......::+=+==:=                  ",
+    "              +%@@@+:--:.....-+%@#++               ",
+    "               =====@%##=-:....-==+*@              ",
+    "                       %##%+...:++==               ",
+    "                         @#=-:-*+=                 ",
+    "                       ===:.::@@                   ",
+    "                      ==-=-*@@@                    ",
+    "                      @@=:=*@                      ",
+    "                      %*-%#=                       ",
+    "                      @+%%=                        ",
+    "                     @%%@                          ",
+    "                     %@@                           ",
+    "                     @                             ",
+	"												    "
+    
+    }), Weapon("Fireball", 1, 3, {
+    "                                                   ",
+	"                                                   ",
+    "                 .--                               ",
+    "                  -=-@                             ",
+    "                       =@@                         ",
+    "                                                   ",
+    "                       @   @                       ",
+    "                    .. @.  @                       ",
+    "                   =+      @@   .                  ",
+    "                  @@@    .  @ --= -@#.             ",
+    "                  @ @@ @@  @@ %   +@               ",
+    "               -. =    %  :@ #@   +                ",
+    "               :@ @=  .  @@@ @@@ %@@               ",
+    "                    @ -=@#   - @ -@%               ",
+    "              =@    +@ #.+   *@@* @                ",
+    "             @#=    *-++*@%= %@+@#@                ",
+    "             #+.% : @@ .# @@#+%:+ *                ",
+    "             *@ =@= #  =: @: @ @*-*@               ",
+    "             *@@  .-= +..:    :% +@%               ",
+    "            :=%@+@.-%@:=@=-.= @**@@%-              ",
+    "              =@@-*=##*.  * =@@@=@%#.              ",
+    "               *@@*#@     *:@%=:+@#=               ",
+    "                #@@.#@ :*+  @@%@@%+                ",
+    "                =#@*@+**  .%*=@@#=                 ",
+    "                 =%@@*@@@@@@@@@#=                  ",
+    "                  :=+*%@@@%*+==                    ",
+    "                        *:                         ",
+    "                                                   "
+    
+    })};
 std::vector<Item> pickupableItems = {Item("Vitality-Potion", 1, 0, 7, {}), Item("Smokebomb", 1, 0, 0, {}), Item("Throwing-Knives", 1, 15, 0, {})};
 
 //clonable enemy objects
@@ -113,6 +223,7 @@ int gold{};
 
 //store the player's defense level, and damage levels for magic and weapons
 int defenseLevel{};
+
 int magicLevel{};
 int weaponLevel{};
 
@@ -168,31 +279,31 @@ int main()
     //temporarily storing the Enemy ascii art as a raw string literal
     enemies.push_back(Enemy("Goblin", 5, 1, R"(                                                   
                                                    
-1                  *++#                             
-2                  ##==##                           
-3                  ##*:  ##                         
-4                   ##+--  ##                       
-5                    ##*--   ##     +               
-6                     ##*--     #*=+#*              
-7                      ##*==*##*+=*#                
-8                       ###+==-=+*# ##              
-9                         #+=+++  #   ##            
-0                        ===*##+===     ###         
-1                        =+*####%#=--     ###       
-2                      =+*###   ####*=--     ##     
-3                    ==+###        #####+===== ##   
-4                  ====##%             ######*****  
-5                 ===+#%@                     ##    
-6                ==+*#%@                            
-7              ====###                              
-8             ++*###                                
-9           +++*##                                  
-0         +++*#                                     
-1        *++#                                       
-2       #*+#                                        
-3       #                                           
-                                                   
-                                                   
+1                      +  *  =                      
+2                      *%%%%%#                      
+3             *# +     @@@%@%@     + #*             
+4             #%%#     *@@@@%#     #@%#             
+5          #+ *@%@ *    %%@@#    ##%%@* **          
+6      ++  %#   *%@@     *@*     @@%*   %%@ #*      
+7       %@@@@@#   **##   *%*   %#*#   *@@@@@#       
+8      #%%--#@@    *%**  @@@  *+%#    @@#=-#%*      
+9      *##@@@+-*%%   @.*@ @ @#.@   #*=:=@@@%%#      
+0          #% %@=: .*  -=@@@+:#@*. :=@@  #          
+1                @%*-#@@@+*=@@@#:*%@                
+2                   %@:@+=@=+@:@@                   
+3                   %@:@+=@=+@:@@                   
+4                @%*:*%@@+*=@@@#:*%@                
+5          #% %@=: .*@ -=@@@+:#@*. :=@@  #          
+6      *##@@@+-*%%   @.*@ @ @#.@   #*=:=@@@%%#      
+7      #%%--#@@    *%**  @@@  *+%#    @@#=-#%*      
+8       %@@@@@#   **##   *%*   %#*#   *@@@@@#       
+9      ++  %#   *%@@     *@*     @@%*   %%@ #*      
+0          #+ *@%@ *    %%@@#    ##%%@* **          
+1             #%%#     *@@@@%#     #@%#             
+2             *# +     @@@%@%@     + #*             
+3                      *%%%%%#                      
+4                      +  *  =                      
+                                                                                   
 )"));
      */
 
@@ -289,6 +400,12 @@ void drawWeapon(std::vector<std::string>& weaponImage) {
     std::cout << '\n';
 }
 
+void drawSpell(std::vector<std::string>& spellImage) {
+	for (auto& line : spellImage) {
+		std::cout << line << '\n';
+	}
+	std::cout << '\n';
+}
 void eventHandler(const std::vector<int> &playerPosition){
 
     //weapon room (for gaining new weapons)
@@ -296,7 +413,7 @@ void eventHandler(const std::vector<int> &playerPosition){
 
         std::cout << "You have found the " << pickupableWeapons.back().name << "...\n";
 
-        //draw weapon here
+        //draw weapon in terminal
         drawWeapon(pickupableWeapons.back().image);
 
         player.addWeapon(pickupableWeapons.back().name, pickupableWeapons.back().minDmg, pickupableWeapons.back().maxDmg, pickupableWeapons.back().image);
@@ -312,6 +429,9 @@ void eventHandler(const std::vector<int> &playerPosition){
     else if (dungeon[playerPosition[0]][playerPosition[1]] == "t") {
 		std::cout << "You have found the " << pickupableMagic.back().name << " spell...\n";
 
+        //draw spell in terminal
+        drawSpell(pickupableMagic.back().image);
+
 		player.addMagic(pickupableMagic.back().name, pickupableMagic.back().minDmg, pickupableMagic.back().maxDmg, pickupableMagic.back().image);
 
 		pickupableMagic.pop_back();
@@ -322,9 +442,10 @@ void eventHandler(const std::vector<int> &playerPosition){
     }
     //map room
     else if (dungeon[playerPosition[0]][playerPosition[1]] == "m") {
-        std::cout << "You've found the map...";
+        std::cout << "You've found the map...\n";
         player.setHasMap(true);
 
+        std::cout << '\n';
         std::cout << "Type \"Enter\" to continue...\n";
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cin.get();
