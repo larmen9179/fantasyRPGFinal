@@ -1035,10 +1035,12 @@ void fight(std::vector<int> &playerPosition) {
 
 							int randomEnemy = getRand(0, (int)enemiesToFight.size() - 1);
 
-                            enemiesToFight[0].setHealthPoints(0);
+                            enemiesToFight[randomEnemy].setHealthPoints(0);
 
                             std::cout << "You throw knives and kill the " << enemiesToFight[randomEnemy].getName() << "...\n";
                             std::this_thread::sleep_for(std::chrono::milliseconds(2500));
+
+                            enemiesToFight.erase(enemiesToFight.begin() + randomEnemy);
 
                             std::cout << '\n';
 
