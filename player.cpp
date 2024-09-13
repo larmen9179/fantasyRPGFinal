@@ -218,4 +218,3 @@ void Player::takeDamage(int damageIn){
 bool Player::hasBeenSpot(int i, int j) {
 	return this->hasBeen[i][j];
 }
-

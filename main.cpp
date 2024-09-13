@@ -34,8 +34,6 @@ std::vector<std::vector<std::string>> dungeon =
     {"-1", "-1", "c", "1", "1", "1", "1", "1", "1", "1", "t", "-1"},
     {"-1", "1", "1", "-1", "w", "1", "-1", "-1", "1", "c", "-1", "-1"},
     {"-1", "s", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"}
-
-
  };
 
 //global player object
@@ -210,7 +208,85 @@ std::vector<Weapon> pickupableMagic = {Weapon("Icestorm", 3, 12, {
     "                                                   "
     
     })};
-std::vector<Item> pickupableItems = {Item("Vitality-Potion", 1, 0, 7, {}), Item("Smokebomb", 1, 0, 0, {}), Item("Throwing-Knives", 1, 15, 0, {})};
+std::vector<Item> pickupableItems = {Item("Vitality-Potion", 1, 0, 7, {
+    "                                        ",
+    "                                        ",
+    "              +++                       ",
+    "              +++  +++ +++              ",
+    "                *  +++                  ",
+    "                   ++                   ",
+    "                                        ",
+    "                +++###%%                ",
+    "              %%%%      %%              ",
+    "              %%%%%## %%                ",
+    "                 % +  %                 ",
+    "                %% ++%%                 ",
+    "                %%   %%                 ",
+    "                %%%  %%                 ",
+    "               %%%    %%%%%             ",
+    "             %%%%    **##%%%            ",
+    "            %%% ++  **#### %%           ",
+    "            %%#*******+**##%%           ",
+    "           %%%****+******##%%           ",
+    "           %%#***++*****###%%           ",
+    "           %%%*******+*###%%            ",
+    "            %%%%**######%%%             ",
+    "               %%%%%%%%%%               ",
+    "                                        "
+    
+    }), Item("Smokebomb", 1, 0, 0, {
+    
+    "                                        ",
+    "@@@        @@@@@@@                      ",
+    "@@@@@@@  @@@@@@@@@@                     ",
+    "@@@@@@@@@@@@@@@@@@@                     ",
+    "@@@@@@@@@@@@@@@@@@@@@                   ",
+    "  @@@@   @@@     @@@@                   ",
+    "       @@@@@@@  @@@@@                   ",
+    "    @@@@@@@@@   @@@@@ @@@@@             ",
+    "    @@@@@       @@@@@@@    @            ",
+    "    @@@@                    @@          ",
+    "                    ----=++*@#%%        ",
+    "                  -:--#*+*****##%@      ",
+    "                -::--=+##*****###%@     ",
+    "               -::-==+****@@#*###%%@    ",
+    "              ----=+*********%@@%%%%@   ",
+    "              ---=+#######****##%%%@@   ",
+    "              --=+##%%%%%%###%%%@@@@@   ",
+    "              ==*##%%%%%%%%%%@@@@@@@@   ",
+    "              +*##%@@@@@@@@@@@@@@@@@    ",
+    "               %%%@@@@@@@@@@@@@@@@@     ",
+    "                @@@@@@@@@@@@@@@@@@      ",
+    "                  @@@@@@@@@@@@@@        ",
+    "                     @@@@@@@@           ",
+    "                                        "
+    
+    }), Item("Throwing-Knives", 1, 15, 0, {
+    "                                        ",
+    "                                        ",
+    "                                        ",
+    "                                 %@     ",
+    "                            --:-#@      ",
+    "                          =---:#%@      ",
+    "                        ----::#*#       ",
+    "                       --=:::@%#        ",
+    "                      -+*=::###         ",
+    "                     -****-@#           ",
+    "                   @#+***=@*            ",
+    "                  %=***++*              ",
+    "               %%++**+:#                ",
+    "              %*****+#                  ",
+    "               %****+                   ",
+    "             @%##++*@                   ",
+    "            @%**+                       ",
+    "           %*@@-                        ",
+    "         @#@@+-                         ",
+    "        @#**=-                          ",
+    "       @%%#-                            ",
+    "       @%=-                             ",
+    "                                        ",
+    "                                        "
+    })};
 
 //clonable enemy objects
 std::vector<Enemy> enemies;
@@ -277,33 +353,30 @@ int main()
     /*
 
     //temporarily storing the Enemy ascii art as a raw string literal
-    enemies.push_back(Enemy("Goblin", 5, 1, R"(                                                   
-                                                   
-1                      +  *  =                      
-2                      *%%%%%#                      
-3             *# +     @@@%@%@     + #*             
-4             #%%#     *@@@@%#     #@%#             
-5          #+ *@%@ *    %%@@#    ##%%@* **          
-6      ++  %#   *%@@     *@*     @@%*   %%@ #*      
-7       %@@@@@#   **##   *%*   %#*#   *@@@@@#       
-8      #%%--#@@    *%**  @@@  *+%#    @@#=-#%*      
-9      *##@@@+-*%%   @.*@ @ @#.@   #*=:=@@@%%#      
-0          #% %@=: .*  -=@@@+:#@*. :=@@  #          
-1                @%*-#@@@+*=@@@#:*%@                
-2                   %@:@+=@=+@:@@                   
-3                   %@:@+=@=+@:@@                   
-4                @%*:*%@@+*=@@@#:*%@                
-5          #% %@=: .*@ -=@@@+:#@*. :=@@  #          
-6      *##@@@+-*%%   @.*@ @ @#.@   #*=:=@@@%%#      
-7      #%%--#@@    *%**  @@@  *+%#    @@#=-#%*      
-8       %@@@@@#   **##   *%*   %#*#   *@@@@@#       
-9      ++  %#   *%@@     *@*     @@%*   %%@ #*      
-0          #+ *@%@ *    %%@@#    ##%%@* **          
-1             #%%#     *@@@@%#     #@%#             
-2             *# +     @@@%@%@     + #*             
-3                      *%%%%%#                      
-4                      +  *  =                      
-                                                                                   
+    enemies.push_back(Enemy("Goblin", 5, 1, R"(
+                                        
+1              +++                       
+2              +++  +++ +++              
+3                *  +++                  
+4                   ++                   
+5                                        
+6                +++###%%                
+7              %%%%      %%              
+8              %%%%%## %%                
+9                 % +  %                 
+0                %% ++%%                 
+1                %%   %%                 
+2                %%%  %%                 
+3               %%%    %%%%%             
+4             %%%%    **##%%%            
+5            %%% ++  **#### %%           
+6            %%#*******+**##%%           
+7           %%%****+******##%%           
+8           %%#***++*****###%%           
+9           %%%*******+*###%%            
+0            %%%%**######%%%             
+1               %%%%%%%%%%               
+                                        
 )"));
      */
 
@@ -384,7 +457,6 @@ int getRand(int min, int max) {
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> dis(min, max);
-
 	return dis(gen);
 }
 
@@ -500,10 +572,19 @@ void eventHandler(const std::vector<int> &playerPosition){
 
 	}
     else if (dungeon[playerPosition[0]][playerPosition[1]] == "b") {
-        std::cout << "You've found a boss room...\n";
+        bossEvent();
     }
 
     dungeon[playerPosition[0]][playerPosition[1]] = "1";
+}
+
+void bossEvent() {
+    clearScreen();
+    std::cout << "BOSS TIME";
+
+    std::cout << "Type \"Enter\" to continue...\n";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.get();
 }
 
 void gameLoop() {
@@ -1131,14 +1212,17 @@ void fight(std::vector<int> &playerPosition) {
 
     std::cout << "All enemies have been defeated...\n";
 
+    std::vector<std::vector<std::string>> itemsToDraw;
+
     for (int i = 0; i < enemiesFell;i++) {
         int itemChoice = getRand(0, (int)pickupableItems.size() - 1);
+
+        itemsToDraw.push_back(pickupableItems[itemChoice].image);
 
 		if (pickupableItems[itemChoice].name == "Throwing-Knives")
 		    std::cout << "You have found " << pickupableItems[itemChoice].name << "...\n";
         else
 			std::cout << "You have found a " << pickupableItems[itemChoice].name << "...\n";
-        
 
         bool itemFound = false;
 
@@ -1153,7 +1237,10 @@ void fight(std::vector<int> &playerPosition) {
         if (!itemFound) {
             player.addItem(pickupableItems[itemChoice].name, pickupableItems[itemChoice].amount, pickupableItems[itemChoice].damage, pickupableItems[itemChoice].healAmount, pickupableItems[itemChoice].image);
         }
+
     }
+
+    drawItems(itemsToDraw);
 
     std::cout << '\n';
     std::cout << "Type \"Enter\" to continue...\n";
@@ -1164,6 +1251,16 @@ void fight(std::vector<int> &playerPosition) {
     clearScreen();
 
 
+}
+
+void drawItems(std::vector<std::vector<std::string>>& itemsToDraw) {
+
+    for (int i = 0; i < itemsToDraw[0].size(); i++) {
+        std::string push = "";
+        for(int j = 0;j < itemsToDraw.size();j++)
+            push += itemsToDraw[j][i];
+        std::cout << push << '\n';
+    }
 }
 
 int countEnemies(std::vector<Enemy>& enemiesToFightIn) {
@@ -1621,15 +1718,3 @@ void printDungeon(std::vector<int> &playerPosition) {
     std::cout << '\n';
 
 }
-
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

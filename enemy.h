@@ -34,5 +34,4 @@ public:
 
 	//methods
 	void takeDamage(const int damageIn);
-
 };

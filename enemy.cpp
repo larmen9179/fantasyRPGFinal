@@ -1,4 +1,3 @@
-
 #include "enemy.h"
 
 //constructors

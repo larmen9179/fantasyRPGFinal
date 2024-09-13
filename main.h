@@ -14,6 +14,8 @@ void drawEnemies(std::vector<Enemy> &enemiesToFight);
 void printPlayerStats();
 void drawWeapon(std::vector<std::string>& weaponImage);
 void drawSpell(std::vector<std::string>& spellImage);
+void bossEvent();
+void drawItems(std::vector<std::vector<std::string>> & itemsToDraw);
 
 //------------------------
 std::vector<int> playerStart();
