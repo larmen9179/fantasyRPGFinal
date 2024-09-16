@@ -774,12 +774,13 @@ void bossEvent() {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cin.get();
 
-    bool bossAlive = true;
     std::string userInput;
+
+    int turns = 2;
 
     Enemy boss("Dragon", 35, 5, 9, {});
 
-    while (bossAlive) {
+    while (boss.getHealthPoints() > 0) {
         clearScreen();
         drawBoss();
 
@@ -797,7 +798,6 @@ void bossEvent() {
             std::cout << "u - use item\n";
             std::cout << "i - inventory\n";
             std::cout << "c - change equipment\n";
-            std::cout << "r - run away\n";
 
 
             std::cout << '\n';
@@ -806,9 +806,140 @@ void bossEvent() {
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cin.get();
         }
+        else if (userInput == "a") {
+            std::cout << '\n';
+            std::cout << "Attack the dragon with current weapon or magic?\n";
+            std::cout << "Type in your option number...\n";
+            std::cout << '\n';
+
+            std::cout << "1 - Weapon\n";
+            std::cout << "2 - Magic\n";
+            std::cout << "3 - Go back...\n";
+
+            std::cout << '\n';
+
+            //grabbing the users choice
+            std::cin >> userInput;
+
+            if (userInput == "1") {
+                int damage = getRand(player.getWeapon(player.getCurrentWeapon()).minDmg, player.getWeapon(player.getCurrentWeapon()).maxDmg);
+
+                std::cout << "You attack the dragon with " << player.getCurrentWeapon() << "...\n";
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+
+                std::cout << "You have dealt " << damage << " damage to the dragon...\n";
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+
+                boss.takeDamage(damage);
+                turns--;
+            }
+            else if (userInput == "2") {
+
+                int damage = getRand(player.getMagic(player.getCurrentMagic()).minDmg, player.getMagic(player.getCurrentMagic()).maxDmg);
+
+                std::cout << "You cast " << player.getCurrentMagic() << "...\n";
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+
+                std::cout << "You have dealt " << damage << " damage to the dragon...\n";
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+
+                boss.takeDamage(damage);
+
+                turns--;
+            }
+            else if (userInput == "3") {
+                continue;
+            }
+            else {
+                std::cout << "Invalid option... Please try again...";
+
+				std::cout << "Type \"Enter\" to continue...\n";
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cin.get();
+
+                continue;
+            }
+
+            //bosses turn to attack
+            if (turns == 0) {
+				int damage = getRand(boss.getMinDamage(), boss.getMaxDamage());
+
+                std::cout << '\n';
+                std::cout << "The dragon attacks you for " << damage << " damage...";
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+
+                player.takeDamage(damage);
+                turns = 2;
+            }
+
+            if (player.getHealthPoints() <= 0) {
+                std::cout << '\n';
+                clearScreen();
+                std::cout << "You have been defeated by the dragon\n";
+                std::cout << "The game has ended!\n";
+
+                std::cout << '\n';
+
+                std::cout << "Type \"Enter\" to exit...\n";
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cin.get();
+
+                exit(0);
+            }
+        }
+        else if (userInput == "u") {
+
+        }
+        else if (userInput == "i") {
+            showInventory();
+        }
+		else if (userInput == "c") {
+            showInventory();
+
+            std::cout << "Enter a command to change equipment: \n";
+
+            std::cout << "w - change weapon\n";
+            std::cout << "m - change magic\n";
+            std::cout << "g - go back\n";
+            std::cout << '\n';
+
+            std::cin >> userInput;
+
+            if (userInput == "w") {
+                std::cout << '\n';
+                std::cout << "Equip which weapon? \n";
+                std::cout << '\n';
+
+                for (auto& weapon : player.getWeapons()) {
+                    std::cout << weapon.first << '\n';
+                }
+
+                std::cout << '\n';
+
+                std::cin >> userInput;
+
+                if (player.getWeapons().find(userInput) != player.getWeapons().end()) {
+                    player.setCurrentWeapon(userInput);
+                    std::cout << "You have equipped the " << userInput << "...\n";
+                    continue;
+                }
+                else {
+                    std::cout << "Invalid weapon. Please try again...\n";
+                    std::cout << "Type \"Enter\" to continue...\n";
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cin.get();
+                    continue;
+                }
+            }
+            else if (userInput == "m") {
+
+            }
+            else if (userInput == "g") {
+
+            }
+		}
 
     }
-
 }
 
 void drawBoss() {
@@ -1147,7 +1278,7 @@ void fight(std::vector<int> &playerPosition) {
 
                     turnsLeft--;
 
-                    std::cout << "You attack the " << enemiesToFight[enemyToAttack].getName() <<  " with " << player.getMagic(player.getCurrentMagic()).name;
+                    std::cout << "You cast " << player.getMagic(player.getCurrentMagic()).name;
 
                     int attackDamage = getRand(player.getMagic(player.getCurrentMagic()).minDmg, player.getMagic(player.getCurrentMagic()).maxDmg);
 
@@ -1453,7 +1584,7 @@ void fight(std::vector<int> &playerPosition) {
 
             std::cout << '\n';
 
-            std::cout << "Type \"Enter\" to continue...\n";
+            std::cout << "Type \"Enter\" to exit...\n";
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cin.get();
 
