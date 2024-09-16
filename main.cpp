@@ -13,10 +13,11 @@
 //declaring global game map
 std::vector<std::vector<std::string>> dungeon = 
 {   
+    //change the player back to the starting room
     //room 3 - possible to encounter (3) enemies
     {"-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"},
     {"-1", "-1", "-1", "-1", "3", "3", "3", "3", "3", "b", "3", "-1"},
-    {"-1", "-1", "3", "3", "3", "3", "t", "3", "3", "3", "3", "-1"},
+    {"-1", "-1", "3", "3", "3", "3", "t", "3", "3", "s", "3", "-1"},
     {"-1", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "-1"},
     {"-1", "3", "3", "c", "3", "3", "3", "3", "3", "3", "c", "-1"},
     {"-1", "3", "3", "-1", "-1", "-1", "3", "w", "3", "3", "-1", "-1"},
@@ -33,7 +34,7 @@ std::vector<std::vector<std::string>> dungeon =
     {"-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "1", "-1"},
     {"-1", "-1", "c", "1", "1", "1", "1", "1", "1", "1", "t", "-1"},
     {"-1", "1", "1", "-1", "w", "1", "-1", "-1", "1", "c", "-1", "-1"},
-    {"-1", "s", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"}
+    {"-1", "1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"}
  };
 
 //global player object
@@ -427,7 +428,7 @@ std::vector<std::string> chestPickup = {
 };
 
 //image for boss to print
-std::vector<std::string> boss = {
+std::vector<std::string> bossImage = {
     
     "                                                      ",
     "                                        .*#@@%        ",
@@ -765,34 +766,59 @@ void eventHandler(const std::vector<int> &playerPosition){
 
 void bossEvent() {
     clearScreen();
-    std::cout << "WELCOME TO MY LAIR...";
+    std::cout << "WELCOME TO MY LAIR...\n";
+
+	std::cout << '\n';
 
     std::cout << "Type \"Enter\" to continue...\n";
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cin.get();
 
     bool bossAlive = true;
+    std::string userInput;
 
-
+    Enemy boss("Dragon", 35, 5, 9, {});
 
     while (bossAlive) {
         clearScreen();
         drawBoss();
 
+        std::cout << '\n';
+
         printPlayerStats();
+
+        std::cout << "Enter a command or type 'help' for a list of commands...\n";
+        std::cout << ">";
+        std::cin >> userInput;
+
+        if (userInput == "help") {
+            std::cout << "Commands: \n";
+            std::cout << "a - attack\n";
+            std::cout << "u - use item\n";
+            std::cout << "i - inventory\n";
+            std::cout << "c - change equipment\n";
+            std::cout << "r - run away\n";
+
+
+            std::cout << '\n';
+            std::cout << "Type \"Enter\" to continue...\n";
+
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin.get();
+        }
 
     }
 
 }
 
 void drawBoss() {
-    for (int i = 0; i < dungeon.size() * 2; i++)
+    for (int i = 0; i < dungeon.size() * 3; i++)
         std::cout << "-";
     
-    for (auto& line : boss) 
+    for (auto& line : bossImage) 
 		std::cout << line << '\n';
 
-    for (int i = 0; i < dungeon.size() * 2; i++) 
+    for (int i = 0; i < dungeon.size() * 3; i++) 
         std::cout << "-";
 }
 
