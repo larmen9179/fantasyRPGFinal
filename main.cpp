@@ -877,7 +877,38 @@ void bossEvent() {
             }
         }
         else if (userInput == "u") {
+            int emptyItems{};
+            std::vector<std::string>usableItems;
+            
+			for (auto& item : player.getItems()) {
+				if (item.amount < 1) {
+					emptyItems++;
+				}
+                else if (item.amount > 0) {
+                    usableItems.push_back(item.name);
+                }
+			}
 
+            if(player.getItems().empty() || emptyItems == player.getItems().size()){
+                std::cout << "You don't have any items to use...\n";
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+                
+                continue;
+			}
+            else{
+                std::cout << '\n';
+
+				for (auto& item : player.getItems()) {
+                    if (item.amount > 0) {
+						std::cout << item.name << " - Amount: " << item.amount << '\n';
+                    }
+				}
+
+                std::cout << '\n';
+				std::cout << "Use which item?\n";
+                std::cout << '\n';
+
+            }
         }
         else if (userInput == "i") {
             showInventory();
@@ -910,6 +941,7 @@ void bossEvent() {
                 if (player.getWeapons().find(userInput) != player.getWeapons().end()) {
                     player.setCurrentWeapon(userInput);
                     std::cout << "You have equipped the " << userInput << "...\n";
+                    std::this_thread::sleep_for(std::chrono::seconds(2));
                     continue;
                 }
                 else {
@@ -921,13 +953,52 @@ void bossEvent() {
                 }
             }
             else if (userInput == "m") {
+                std::cout << '\n';
+				std::cout << "Equip which spell? \n";
+                std::cout << '\n';
 
+				for (auto& spell : player.getSpells()) {
+					std::cout << spell.first << '\n';
+				}
+
+                std::cout << '\n';
+
+                std::cin >> userInput;
+
+                if (player.getSpells().find(userInput) != player.getSpells().end()) {
+                    player.setCurrentMagic(userInput);
+					std::cout << "You have equipped the " << userInput << " spell...\n";
+                    std::this_thread::sleep_for(std::chrono::seconds(2));
+                    continue;
+                }
+                else {
+					std::cout << "Invalid spell. Please try again...\n";
+					std::cout << "Type \"Enter\" to continue...\n";
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+					std::cin.get();
+					continue;
+                }
             }
             else if (userInput == "g") {
+                continue;
+            }
+            else {
+				std::cout << "Invalid option... Please try again...";
 
+				std::cout << "Type \"Enter\" to continue...\n";
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+				std::cin.get();
+                continue;
             }
 		}
-
+        else {
+			std::cout << "Invalid command... Please try again...\n";
+			
+			std::cout << "Type \"Enter\" to continue...\n";
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			std::cin.get();
+			continue;
+        }
     }
 }
 
@@ -1599,6 +1670,8 @@ void fight(std::vector<int> &playerPosition) {
 
         if (player.getHealthPoints() <= 0) {
             std::cout << "You have been defeated... The game has ended!\n";
+
+            drawDeath();
 
             std::cout << '\n';
 
