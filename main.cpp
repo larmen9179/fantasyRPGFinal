@@ -489,13 +489,13 @@ int main()
     //-------------TESTING-------------------------------
 
     //giving the player the map early to test print map functionality
-    //player.setHasMap(true);
+    player.setHasMap(true);
 
     //--------------------------------------------
     
 
     //adding the weapon to the player's inventory
-    player.addWeapon(firstWeapon, 1, 2, {});
+    player.addWeapon(firstWeapon, 100, 100, {});
 
     //setting the player's current weapon to the first weapon
     player.setCurrentWeapon(firstWeapon);
@@ -515,12 +515,12 @@ int main()
     //-----------TESTING---------------------------
     //Testing logic for items
 
-    //std::string firstItem = "Throwing-Knives";
-    //std::string secondItem = "Vitality-Potion";
-    //std::string thirdItem = "Smokebomb";
-    //player.addItem(firstItem, 1, 15, 0, {});
-    //player.addItem(secondItem, 1, 0, 7, {});
-    //player.addItem(thirdItem, 1, 0, 0, {});
+    std::string firstItem = "Throwing-Knives";
+    std::string secondItem = "Vitality-Potion";
+    std::string thirdItem = "Smokebomb";
+    player.addItem(firstItem, 1, 15, 0, {});
+    player.addItem(secondItem, 1, 0, 7, {});
+    player.addItem(thirdItem, 1, 0, 0, {});
 
     //--------------------------------------------
 
@@ -549,7 +549,7 @@ int main()
      */
 
     //adding the enemies to the enemies vector
-    enemies.push_back(Enemy("Goblin", 5, 1, 2, {
+    enemies.push_back(Enemy("Goblin", 6, 2, 3, {
         "                                        ",
         "                             %%         ",
         "         %%%%%%%%        %%%%           ",
@@ -571,7 +571,7 @@ int main()
         "                          %%%%%         ",
         "                                        "
         }));
-    enemies.push_back(Enemy("Merman", 10, 3, 6, {
+    enemies.push_back(Enemy("Merman", 12, 3, 4, {
         "     ###                                ",
         "      #  #         *#                   ",
         "  ### ## ##     **+=                    ",
@@ -593,7 +593,7 @@ int main()
         "     ##         **  ## ##* #       ##   ",
         "     ##       #*#      **  #*           "
         }));
-    enemies.push_back(Enemy("Kobold", 8, 2, 4, {
+    enemies.push_back(Enemy("Kobold", 10, 4, 5, {
         "                                        ",
         "                                        ",
         "                                  ++    ",
@@ -772,11 +772,11 @@ void bossEvent() {
 
     int turns = 2;
 
-    Enemy boss("Dragon", 35, 5, 9, {});
+    Enemy boss("Dragon", 75, 5, 9, {});
 
     while (boss.getHealthPoints() > 0) {
         clearScreen();
-        drawBoss();
+        drawBoss(boss);
 
         std::cout << '\n';
 
@@ -1056,14 +1056,34 @@ void bossEvent() {
 			continue;
         }
     }
+
+    win();
 }
 
-void drawBoss() {
+void win(){
+
+    clearScreen();
+
+	std::cout << "You have defeated the dragon...\n";
+	std::cout << "You have won the game!\n";
+
+	std::cout << '\n';
+
+	std::cout << "Type \"Enter\" to exit...\n";
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	std::cin.get();
+
+	exit(0);
+}
+
+void drawBoss(Enemy & boss) {
     for (int i = 0; i < dungeon.size() * 3; i++)
         std::cout << "-";
     
     for (auto& line : bossImage) 
 		std::cout << line << '\n';
+
+    std::cout << "Dragon Health: " << boss.getHealthPoints() << '\n';
 
     for (int i = 0; i < dungeon.size() * 3; i++) 
         std::cout << "-";
@@ -2137,6 +2157,14 @@ void showInventory() {
 
     std::cout << '\n';
     std::cout << "Inventory: \n";
+
+    std::cout << '\n';
+
+    std::cout << "Weapon Dmg Level: " << weaponLevel << '\n';
+
+    std::cout << "Magic Dmg Level: " << magicLevel << '\n';
+
+    std::cout << "Defense Level: " << defenseLevel << '\n';
 
     std::cout << '\n';
 

@@ -19,8 +19,9 @@ void drawItems(std::vector<std::vector<std::string>> & itemsToDraw);
 void drawUpgrade(std::string upgrade);
 void drawMap();
 void drawChest();
-void drawBoss();
+void drawBoss(Enemy & boss);
 void drawDeath();
+void win();
 
 //------------------------
 std::vector<int> playerStart();
