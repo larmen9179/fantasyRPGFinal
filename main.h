@@ -20,6 +20,7 @@ void drawUpgrade(std::string upgrade);
 void drawMap();
 void drawChest();
 void drawBoss();
+void drawDeath();
 
 //------------------------
 std::vector<int> playerStart();
