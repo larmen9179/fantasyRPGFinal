@@ -17,7 +17,7 @@ std::vector<std::vector<std::string>> dungeon =
     //room 3 - possible to encounter (3) enemies
     {"-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"},
     {"-1", "-1", "-1", "-1", "3", "3", "3", "3", "3", "b", "3", "-1"},
-    {"-1", "-1", "3", "3", "3", "3", "t", "3", "3", "s", "3", "-1"},
+    {"-1", "-1", "3", "3", "3", "3", "t", "3", "3", "3", "3", "-1"},
     {"-1", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "-1"},
     {"-1", "3", "3", "c", "3", "3", "3", "3", "3", "3", "c", "-1"},
     {"-1", "3", "3", "-1", "-1", "-1", "3", "w", "3", "3", "-1", "-1"},
@@ -32,9 +32,9 @@ std::vector<std::vector<std::string>> dungeon =
 
     //room 1 encounters just one enemy
     {"-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "1", "-1"},
-    {"-1", "-1", "c", "1", "1", "1", "1", "1", "1", "1", "t", "-1"},
-    {"-1", "1", "1", "-1", "w", "1", "-1", "-1", "1", "c", "-1", "-1"},
-    {"-1", "1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"}
+    {"-1", "-1", "c", "1", "1", "1", "1", "1", "1", "1", "w", "-1"},
+    {"-1", "1", "1", "-1", "t", "1", "-1", "-1", "1", "c", "-1", "-1"},
+    {"-1", "s", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"}
  };
 
 //global player object
@@ -489,13 +489,13 @@ int main()
     //-------------TESTING-------------------------------
 
     //giving the player the map early to test print map functionality
-    player.setHasMap(true);
+    //player.setHasMap(true);
 
     //--------------------------------------------
     
 
     //adding the weapon to the player's inventory
-    player.addWeapon(firstWeapon, 100, 101, {});
+    player.addWeapon(firstWeapon, 1, 2, {});
 
     //setting the player's current weapon to the first weapon
     player.setCurrentWeapon(firstWeapon);
@@ -504,10 +504,10 @@ int main()
     //----------TESTING---------------------------
     //Testing logic for magic attacks
 
-    std::string firstMagic = "Fireball";
-    player.addMagic(firstMagic, 1, 3, {});
+    //std::string firstMagic = "Fireball";
+    //player.addMagic(firstMagic, 1, 3, {});
     
-    player.setCurrentMagic(firstMagic);
+    //player.setCurrentMagic(firstMagic);
 
     //--------------------------------------------
    
@@ -515,12 +515,12 @@ int main()
     //-----------TESTING---------------------------
     //Testing logic for items
 
-    std::string firstItem = "Throwing-Knives";
-    std::string secondItem = "Vitality-Potion";
-    std::string thirdItem = "Smokebomb";
-    player.addItem(firstItem, 1, 15, 0, {});
-    player.addItem(secondItem, 1, 0, 7, {});
-    player.addItem(thirdItem, 1, 0, 0, {});
+    //std::string firstItem = "Throwing-Knives";
+    //std::string secondItem = "Vitality-Potion";
+    //std::string thirdItem = "Smokebomb";
+    //player.addItem(firstItem, 1, 15, 0, {});
+    //player.addItem(secondItem, 1, 0, 7, {});
+    //player.addItem(thirdItem, 1, 0, 0, {});
 
     //--------------------------------------------
 
@@ -667,6 +667,11 @@ void eventHandler(const std::vector<int> &playerPosition){
     }
     //totem room (for gaining new spells)
     else if (dungeon[playerPosition[0]][playerPosition[1]] == "t") {
+
+        if (pickupableMagic.back().name == "Fireball") {
+            player.setCurrentMagic(pickupableMagic.back().name);
+        }
+
 		std::cout << "You have found the " << pickupableMagic.back().name << " spell...\n";
 
         //draw spell in terminal
@@ -867,6 +872,8 @@ void bossEvent() {
                 std::cout << "You have been defeated by the dragon\n";
                 std::cout << "The game has ended!\n";
 
+                drawDeath();
+
                 std::cout << '\n';
 
                 std::cout << "Type \"Enter\" to exit...\n";
@@ -907,6 +914,55 @@ void bossEvent() {
                 std::cout << '\n';
 				std::cout << "Use which item?\n";
                 std::cout << '\n';
+
+                std::cin >> userInput;
+
+                if (std::find(usableItems.begin(), usableItems.end(), userInput) != usableItems.end()) {
+
+                    if (userInput == "Vitality-Potion") {
+                        if (player.getHealthPoints() == player.getMaxHealth())
+                            std::cout << "You are already at full health...";
+                        else {
+                            turns--;
+                            int healAmount = getRand(4, 10);
+                            player.getItem("Vitality-Potion").amount--;
+                            player.heal(healAmount);
+                            std::cout << "You have healed for " << healAmount << " health points...\n";
+                        }
+
+                        std::cout << '\n';
+
+                        std::cout << "Type \"Enter\" to continue...\n";
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        std::cin.get();
+                    }
+                    else if (userInput == "Smokebomb") {
+                        player.getItem("Smokebomb").amount--;
+
+                        std::cout << "You use a smokebomb to blind the dragon...\n";
+                        std::this_thread::sleep_for(std::chrono::seconds(2));
+                        std::cout << "You gain an extra turn...\n";
+                        turns++;
+                    }
+                    else if (userInput == "Throwing-Knives") {
+                        turns--;
+
+                        player.getItem("Throwing-Knives").amount--;
+
+                        boss.takeDamage(4);
+
+                        std::cout << "You throw knives and hit the dragon for 4 damage...\n";
+                        std::this_thread::sleep_for(std::chrono::milliseconds(2500));
+
+                        std::cout << '\n';
+
+                    }
+                }
+                else {
+                    std::cout << "Invalid item... Please try again...\n";
+					std::this_thread::sleep_for(std::chrono::seconds(2));
+					continue;
+                }
 
             }
         }
@@ -1553,6 +1609,7 @@ void fight(std::vector<int> &playerPosition) {
 						    std::cout << item.name << " - Amount: " << item.amount << '\n';
 					    }
 				    }
+                    std::cout << "g - go back\n";
 
                     std::cout << '\n';
                     std::cout << "Use which item? \n";
@@ -1612,6 +1669,10 @@ void fight(std::vector<int> &playerPosition) {
 
 						}
 
+                    }
+                    else if (userInput == "g") {
+                        clearScreen();
+                        continue;
                     }
                     else {
                         std::cout << '\n';
@@ -2035,7 +2096,7 @@ void inputHandler(std::string& userInput, std::vector<int>& playerPosition, std:
             bool potionFound = false;
 
             for(auto& item : player.getItems()) {
-				if (item.name == "Vitality Potion") {
+				if (item.name == "Vitality-Potion") {
                     if (item.amount > 0) {
                         item.amount--;
                         potionFound = true;
