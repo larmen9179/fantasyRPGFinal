@@ -490,7 +490,7 @@ int main()
 
     mciSendString(TEXT("open \"audio\\fantasyTheme.mp3\" type mpegvideo alias theme"), NULL, 0, NULL);
     mciSendString(TEXT("play theme repeat"), NULL, 0, NULL);
-    mciSendString(TEXT("setaudio theme volume to 25"), NULL, 0, NULL);
+    mciSendString(TEXT("setaudio theme volume to 500"), NULL, 0, NULL);
 
     //giving the player their first weapon (fists)
     std::string firstWeapon = "Fists";
