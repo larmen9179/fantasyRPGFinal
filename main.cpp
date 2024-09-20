@@ -9,6 +9,12 @@
 #include "main.h"
 #include "player.h"
 #include "enemy.h"
+//#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
+
+#define NOMINMAX
+#include <Windows.h>
+
 
 //declaring global game map
 std::vector<std::vector<std::string>> dungeon = 
@@ -482,6 +488,8 @@ bool transition = false;
 
 int main()
 {
+
+    mciSendString(TEXT("open \"fantasyTheme.wav\" type waveaudio alias theme"), NULL, 0, NULL);
     //giving the player their first weapon (fists)
     std::string firstWeapon = "Fists";
 
