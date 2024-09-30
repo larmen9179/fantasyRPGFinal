@@ -1161,7 +1161,14 @@ void gameLoop() {
                 if (randNumber <= enemyEncounter) {
                     std::cout << "You have encountered an enemy...\n";
 
+                    mciSendString(TEXT("stop theme"), NULL, 0, NULL);
+                    mciSendString(TEXT("open \"audio\\combatTheme.mp3\" type mpegvideo alias battle"), NULL, 0, NULL);
+                    mciSendString(TEXT("play battle repeat"), NULL, 0, NULL);
+                    mciSendString(TEXT("setaudio battle volume to 50"), NULL, 0, NULL);
                     fight(playerPosition);
+                    mciSendString(TEXT("stop battle"), NULL, 0, NULL);
+                    mciSendString(TEXT("close battle"), NULL, 0, NULL);
+                    mciSendString(TEXT("play theme repeat"), NULL, 0, NULL);
 
                     std::cout << "enemy encounter rate is reset\n";
 
@@ -1828,7 +1835,7 @@ void fight(std::vector<int> &playerPosition) {
 
     clearScreen();
 
-
+    
 }
 
 void drawItems(std::vector<std::vector<std::string>>& itemsToDraw) {
