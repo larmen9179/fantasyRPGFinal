@@ -9,6 +9,7 @@
 #include "main.h"
 #include "player.h"
 #include "enemy.h"
+#include "audio.h"
 #pragma comment(lib, "winmm.lib")
 
 #define NOMINMAX
@@ -1420,6 +1421,8 @@ void fight(std::vector<int> &playerPosition) {
 
                     turnsLeft--;
 
+                    weaponSound(player.getWeapon(player.getCurrentWeapon()).name, "start");
+
                     std::cout << "You attack the " << enemiesToFight[enemyToAttack].getName() << " with " << player.getWeapon(player.getCurrentWeapon()).name;
 
                     int attackDamage = getRand(player.getWeapon(player.getCurrentWeapon()).minDmg, player.getWeapon(player.getCurrentWeapon()).maxDmg);
@@ -1440,6 +1443,8 @@ void fight(std::vector<int> &playerPosition) {
                     }
 
                     std::this_thread::sleep_for(std::chrono::seconds(2));
+
+                    weaponSound(player.getWeapon(player.getCurrentWeapon()).name, "close");
 
                 }
                 else if (userInput == "2") {
