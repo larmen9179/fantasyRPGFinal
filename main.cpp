@@ -506,7 +506,7 @@ int main()
     
 
     //adding the weapon to the player's inventory
-    player.addWeapon(firstWeapon, 100, 100, {});
+    player.addWeapon(firstWeapon, 0, 0, {});
 
     //setting the player's current weapon to the first weapon
     player.setCurrentWeapon(firstWeapon);
@@ -514,8 +514,8 @@ int main()
 
     //----------TESTING---------------------------
     //Testing logic for magic attacks
-
-    //std::string firstMagic = "Fireball";
+    //
+    //std::string firstMagic = "IceStorm";
     //player.addMagic(firstMagic, 1, 3, {});
     
     //player.setCurrentMagic(firstMagic);
@@ -1465,6 +1465,8 @@ void fight(std::vector<int> &playerPosition) {
 
                     turnsLeft--;
 
+                    magicSound(player.getMagic(player.getCurrentMagic()).name, "start");
+
                     std::cout << "You cast " << player.getMagic(player.getCurrentMagic()).name;
 
                     int attackDamage = getRand(player.getMagic(player.getCurrentMagic()).minDmg, player.getMagic(player.getCurrentMagic()).maxDmg);
@@ -1485,6 +1487,8 @@ void fight(std::vector<int> &playerPosition) {
                     }
 
                     std::this_thread::sleep_for(std::chrono::seconds(2));
+
+                    magicSound(player.getMagic(player.getCurrentMagic()).name, "close");
                 }
                 else {
 
@@ -1671,6 +1675,9 @@ void fight(std::vector<int> &playerPosition) {
                                 int healAmount = getRand(4, 10);
                                 player.getItem("Vitality-Potion").amount--;
                                 player.heal(healAmount);
+
+                                itemSound("Vitality-Potion", "start");
+
                                 std::cout << "You have healed for " << healAmount << " health points...\n";
                             }
 
@@ -1685,6 +1692,9 @@ void fight(std::vector<int> &playerPosition) {
                         else if (userInput == "Smokebomb") {
                             player.getItem("Smokebomb").amount--;
                             ran = true;
+
+                            itemSound("Smokebomb", "start");
+
                             std::cout << "You use a smokebomb to escape...\n";
                             std::this_thread::sleep_for(std::chrono::seconds(2));
                             std::cout << "You have successfully ran away...\n";
@@ -1701,6 +1711,8 @@ void fight(std::vector<int> &playerPosition) {
 							int randomEnemy = getRand(0, (int)enemiesToFight.size() - 1);
 
                             enemiesToFight[randomEnemy].setHealthPoints(0);
+
+                            itemSound("Throwing-Knives", "start");
 
                             std::cout << "You throw knives and kill the " << enemiesToFight[randomEnemy].getName() << "...\n";
                             std::this_thread::sleep_for(std::chrono::milliseconds(2500));
@@ -1731,6 +1743,10 @@ void fight(std::vector<int> &playerPosition) {
                     }
             }   
 
+            //close the item audio
+            itemSound("Vitality-Potion", "close");
+            itemSound("Smokebomb", "close");
+            itemSound("Throwing-Knives", "close");
         }
         else {
             std::cout << '\n';
@@ -1742,13 +1758,15 @@ void fight(std::vector<int> &playerPosition) {
 
         std::cout << '\n';
 
-        if (turnsLeft == 0) {
+        
 
+        if (turnsLeft == 0) {
+            std::string enemyGrab;
             turnsLeft = 2;
 
             for (auto& enemy : enemiesToFight) {
                 if (enemy.getHealthPoints() > 0) {
-
+                    enemyGrab = enemy.getName();
                     //The enemy's damage is randomized from 1 to their damage attribute
                     int enemyDamage = getRand(1, enemy.getMaxDamage());
 
@@ -1759,10 +1777,15 @@ void fight(std::vector<int> &playerPosition) {
                         enemyDamage = 1;
                     
                     player.takeDamage(enemyDamage);
+
+                    enemySound(enemyGrab, "start");
+
                     std::cout << enemy.getName() << " has attacked you for " << enemyDamage << " damage...\n";
                     std::this_thread::sleep_for(std::chrono::seconds(2));
                 }
             }
+
+            enemySound(enemyGrab, "close");
 
         }
 
@@ -1772,6 +1795,11 @@ void fight(std::vector<int> &playerPosition) {
         aliveEnemies = countEnemies(enemiesToFight);
 
         if (player.getHealthPoints() <= 0) {
+
+            mciSendString(TEXT("open \"audio\\playerDeath.mp3\" type mpegvideo alias death"), NULL, 0, NULL);
+            mciSendString(TEXT("play death"), NULL, 0, NULL);
+            mciSendString(TEXT("setaudio death volume to 100"), NULL, 0, NULL);
+
             std::cout << "You have been defeated... The game has ended!\n";
 
             drawDeath();
@@ -1781,6 +1809,8 @@ void fight(std::vector<int> &playerPosition) {
             std::cout << "Type \"Enter\" to exit...\n";
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cin.get();
+
+            mciSendString(TEXT("close death"), NULL, 0, NULL);
 
             exit(0);
         }
@@ -2152,6 +2182,10 @@ void inputHandler(std::string& userInput, std::vector<int>& playerPosition, std:
 
 				player.heal(healAmount);
 
+                mciSendString(TEXT("open \"audio\\potionUse.mp3\" type mpegvideo alias heal"), NULL, 0, NULL);
+                mciSendString(TEXT("play heal"), NULL, 0, NULL);
+                mciSendString(TEXT("setaudio heal volume to 500"), NULL, 0, NULL);
+
 				std::cout << "You have healed for " << healAmount << " health...\n";
 
 			}
@@ -2172,6 +2206,8 @@ void inputHandler(std::string& userInput, std::vector<int>& playerPosition, std:
         std::cin.get();
     }
     std::cout << '\n';
+
+    mciSendString(TEXT("close heal"), NULL, 0, NULL);
 
 }
 

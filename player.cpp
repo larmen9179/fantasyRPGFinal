@@ -20,7 +20,7 @@ Player::Player(const std::string &nameIn, const std::vector<std::vector<std::str
 	: name(nameIn), 
 	attackLevel(1), 
 	maxHealth(10), 
-	healthPoints(10), 
+	healthPoints(1), 
 	keys(0), 
 	hasMap(false), 
 	hasBeen(dungeonIn.size(), std::vector<bool>(dungeonIn[0].size(), false))
