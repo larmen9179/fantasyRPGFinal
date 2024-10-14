@@ -117,12 +117,12 @@ void enemySound(std::string enemy, std::string state) {
 		if (enemy == "Goblin") {
 			mciSendString(TEXT("open \"audio\\goblinAttack.mp3\" type mpegvideo alias goblin"), NULL, 0, NULL);
 			mciSendString(TEXT("play goblin"), NULL, 0, NULL);
-			mciSendString(TEXT("setaudio goblin volume to 350"), NULL, 0, NULL);
+			mciSendString(TEXT("setaudio goblin volume to 250"), NULL, 0, NULL);
 		}
 		else if (enemy == "Merman") {
 			mciSendString(TEXT("open \"audio\\mermanAttack.mp3\" type mpegvideo alias merman"), NULL, 0, NULL);
 			mciSendString(TEXT("play merman"), NULL, 0, NULL);
-			mciSendString(TEXT("setaudio merman volume to 150"), NULL, 0, NULL);
+			mciSendString(TEXT("setaudio merman volume to 100"), NULL, 0, NULL);
 		}
 		else if (enemy == "Kobold") {
 			mciSendString(TEXT("open \"audio\\koboldAttack.mp3\" type mpegvideo alias kobold"), NULL, 0, NULL);

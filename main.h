@@ -22,6 +22,7 @@ void drawChest();
 void drawBoss(Enemy & boss);
 void drawDeath();
 void win();
+void nameChoice();
 
 //------------------------
 std::vector<int> playerStart();

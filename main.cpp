@@ -44,7 +44,7 @@ std::vector<std::vector<std::string>> dungeon =
  };
 
 //global player object
-Player player("Roghbradden", dungeon); 
+Player player("", dungeon); 
 
 //pickupable weapons/items/magic
 std::vector<Weapon> pickupableWeapons = { Weapon("Crossbow", 6, 11, {
@@ -491,7 +491,7 @@ int main()
 
     mciSendString(TEXT("open \"audio\\fantasyTheme.mp3\" type mpegvideo alias theme"), NULL, 0, NULL);
     mciSendString(TEXT("play theme repeat"), NULL, 0, NULL);
-    mciSendString(TEXT("setaudio theme volume to 50"), NULL, 0, NULL);
+    mciSendString(TEXT("setaudio theme volume to 20"), NULL, 0, NULL);
 
     //giving the player their first weapon (fists)
     std::string firstWeapon = "Fists";
@@ -506,7 +506,7 @@ int main()
     
 
     //adding the weapon to the player's inventory
-    player.addWeapon(firstWeapon, 0, 0, {});
+    player.addWeapon(firstWeapon, 1, 2, {});
 
     //setting the player's current weapon to the first weapon
     player.setCurrentWeapon(firstWeapon);
@@ -538,25 +538,17 @@ int main()
     /*
 
     //temporarily storing the Enemy ascii art as a raw string literal
-    enemies.push_back(Enemy("Goblin", 5, 1, R"(                                                  
-                                                  
-1                  =======-===-                    
-2                -====++====++==-=-                
-3               -====+*****+++=====-=              
-4              -*#=-+#%%%%%#*+-===+=-=             
-5             #@%#++*#%@@@@@@*=+++-+=-==           
-6            *@%%%*=+*%@@@@@@#=**+++++===          
-7           -++-%@#+**###%%%%+=#*+=++==+=          
-8           =++-*##*##%###*==-**+=+*+++++=         
-9           +*=*++++*#%##***+-=*#*+++++++          
-0           =+*+*==+++##@@%*++--#*#**+**+          
-1           ++##++*++*#@@@@@#%#*+#******           
-2           **###**#*+%@@@@**%##%%**+*+            
-3            +##***++*%@@%=-=+*#%+*+++             
-4           ==***==++*+**+=+++##*+++               
-5            ##**#%##*****####%%###                
-6             ##%%%##%                             
-    )"));
+    enemies.push_back(Enemy("Goblin", 5, 1, R"(
+1                                              
+2 __ __  ____   __ ______   ___   ____   __ __ 
+3|  |  ||    | /  ]      | /   \ |    \ |  |  |
+4|  |  | |  | /  /|      ||     ||  D  )|  |  |
+5|  |  | |  |/  / |_|  |_||  O  ||    / |  ~  |
+6|  :  | |  /   \_  |  |  |     ||    \ |___, |
+7 \   /  |  \     | |  |  |     ||  .  \|     |
+8  \_/  |____\____| |__|   \___/ |__|\_||____/ 
+9                                              
+)"));
      */
 
     //adding the enemies to the enemies vector
@@ -628,8 +620,29 @@ int main()
         }));
 
     //calling the main game loop
+
+    nameChoice();
+
     gameLoop();
     return 0;
+}
+
+void nameChoice() {
+    std::cout << "                                                     \n";
+    std::cout << " __    __    ___  _        __   ___   ___ ___    ___ \n";
+    std::cout << "|  |__|  |  /  _]| |      /  ] /   \\ |   |   |  /  _]\n";
+    std::cout << "|  |  |  | /  [_ | |     /  / |     || _   _ | /  [_ \n";
+    std::cout << "|  |  |  ||    _]| |___ /  /  |  O  ||  \\_/  ||    _]\n";
+    std::cout << "|  `  '  ||   [_ |     /   \\_ |     ||   |   ||   [_ \n";
+    std::cout << " \\      / |     ||     \\     ||     ||   |   ||     |\n";
+    std::cout << "  \\_/\\_/  |_____||_____|\\____| \\___/ |___|___||_____|\n";
+    std::cout << "                                                     \n";
+
+    std::cout << "Please enter in your name adventurer: ";
+    std::string name;
+    std::cin >> name;
+    player.setName(name);
+    clearScreen();
 }
 
 int getRand(int min, int max) {
@@ -640,7 +653,7 @@ int getRand(int min, int max) {
 }
 
 void printPlayerStats() {
-    std::cout << "Current Health: " << player.getHealthPoints() << '\n';
+    std::cout << player.getName() << " Health: " << player.getHealthPoints() << '\n';
     std::cout << "Total Gold: " << gold << '\n';
 }
 
@@ -662,6 +675,10 @@ void eventHandler(const std::vector<int> &playerPosition){
     //weapon room (for gaining new weapons)
     if (dungeon[playerPosition[0]][playerPosition[1]] == "w") {
 
+        mciSendString(TEXT("open \"audio\\weaponPickup.mp3\" type mpegvideo alias weaponP"), NULL, 0, NULL);
+        mciSendString(TEXT("play weaponP"), NULL, 0, NULL);
+        mciSendString(TEXT("setaudio weaponP volume to 100"), NULL, 0, NULL);
+
         std::cout << "You have found the " << pickupableWeapons.back().name << "...\n";
 
         //draw weapon in terminal
@@ -674,10 +691,16 @@ void eventHandler(const std::vector<int> &playerPosition){
         std::cout << "Type \"Enter\" to continue...\n";
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cin.get();
+
+        mciSendString(TEXT("close weaponP"), NULL, 0, NULL);
         
     }
     //totem room (for gaining new spells)
     else if (dungeon[playerPosition[0]][playerPosition[1]] == "t") {
+
+        mciSendString(TEXT("open \"audio\\weaponPickup.mp3\" type mpegvideo alias weaponP"), NULL, 0, NULL);
+        mciSendString(TEXT("play weaponP"), NULL, 0, NULL);
+        mciSendString(TEXT("setaudio weaponP volume to 100"), NULL, 0, NULL);
 
         if (pickupableMagic.back().name == "Fireball") {
             player.setCurrentMagic(pickupableMagic.back().name);
@@ -695,9 +718,16 @@ void eventHandler(const std::vector<int> &playerPosition){
         std::cout << "Type \"Enter\" to continue...\n";
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cin.get();
+
+        mciSendString(TEXT("close weaponP"), NULL, 0, NULL);
     }
     //map room
     else if (dungeon[playerPosition[0]][playerPosition[1]] == "m") {
+
+        mciSendString(TEXT("open \"audio\\mapPickup.mp3\" type mpegvideo alias map"), NULL, 0, NULL);
+        mciSendString(TEXT("play map"), NULL, 0, NULL);
+        mciSendString(TEXT("setaudio map volume to 200"), NULL, 0, NULL);
+
         std::cout << "You've found the map...\n";
         player.setHasMap(true);
 
@@ -707,12 +737,18 @@ void eventHandler(const std::vector<int> &playerPosition){
         std::cout << "Type \"Enter\" to continue...\n";
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cin.get();
+
+        mciSendString(TEXT("close map"), NULL, 0, NULL);
     }
     //chest room
 	else if (dungeon[playerPosition[0]][playerPosition[1]] == "c") {
 		
         //giving the player a random amount of gold from each chest found
         std::cout << "You've found a chest...\n";
+
+        mciSendString(TEXT("open \"audio\\chestOpen.mp3\" type mpegvideo alias chest"), NULL, 0, NULL);
+        mciSendString(TEXT("play chest"), NULL, 0, NULL);
+        mciSendString(TEXT("setaudio chest volume to 100"), NULL, 0, NULL);
 
         drawChest();
 
@@ -724,24 +760,34 @@ void eventHandler(const std::vector<int> &playerPosition){
         gold += gAmount;
 
         //waiting in the console for 2 seconds
-        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::this_thread::sleep_for(std::chrono::seconds(3));
 
         //generating a drop chance for character upgrades
         int dropChance = getRand(1, 9);
 
+        mciSendString(TEXT("close chest"), NULL, 0, NULL);
+
         //gives the player more defense (reduced damage from enemies attacks)
         if (dropChance <= 3) {
+
+            mciSendString(TEXT("open \"audio\\armorPickup.mp3\" type mpegvideo alias armor"), NULL, 0, NULL);
+            mciSendString(TEXT("play armor"), NULL, 0, NULL);
+            mciSendString(TEXT("setaudio armor volume to 100"), NULL, 0, NULL);
+
             std::cout << "You've found an armor piece...\n";
             drawUpgrade("defense");
             std::cout << "Your defense level has increased...\n";
-
-
 
             defenseLevel++;
 
         }
         //gives the player more magic damage
         else if (dropChance >= 4 && dropChance <= 6) {
+
+            mciSendString(TEXT("open \"audio\\relicPickup.mp3\" type mpegvideo alias relic"), NULL, 0, NULL);
+            mciSendString(TEXT("play relic"), NULL, 0, NULL);
+            mciSendString(TEXT("setaudio relic volume to 25"), NULL, 0, NULL);
+
             std::cout << "You've found a magical relic...\n";
             drawUpgrade("magic");
             std::cout << "Your magic damage has increased...\n";
@@ -750,6 +796,11 @@ void eventHandler(const std::vector<int> &playerPosition){
         }
         //gives the player more weapon damage
         else if(dropChance >= 7 && dropChance <= 9){
+
+            mciSendString(TEXT("open \"audio\\shardPickup.mp3\" type mpegvideo alias shard"), NULL, 0, NULL);
+            mciSendString(TEXT("play shard"), NULL, 0, NULL);
+            mciSendString(TEXT("setaudio shard volume to 100"), NULL, 0, NULL);
+
             std::cout << "You're found an enchanted shard...\n";
             drawUpgrade("weapon");
             std::cout << "Your weapon damage has increased...\n";
@@ -765,6 +816,10 @@ void eventHandler(const std::vector<int> &playerPosition){
     else if (dungeon[playerPosition[0]][playerPosition[1]] == "b") {
         bossEvent();
     }
+
+    mciSendString(TEXT("close relic"), NULL, 0, NULL);
+    mciSendString(TEXT("close shard"), NULL, 0, NULL);
+    mciSendString(TEXT("close armor"), NULL, 0, NULL);
 
     dungeon[playerPosition[0]][playerPosition[1]] = "1";
 }
@@ -829,18 +884,25 @@ void bossEvent() {
             if (userInput == "1") {
                 int damage = getRand(player.getWeapon(player.getCurrentWeapon()).minDmg, player.getWeapon(player.getCurrentWeapon()).maxDmg);
 
+                weaponSound(player.getWeapon(player.getCurrentWeapon()).name, "start");
+
                 std::cout << "You attack the dragon with " << player.getCurrentWeapon() << "...\n";
                 std::this_thread::sleep_for(std::chrono::seconds(2));
 
                 std::cout << "You have dealt " << damage << " damage to the dragon...\n";
                 std::this_thread::sleep_for(std::chrono::seconds(2));
 
-                boss.takeDamage(damage);
+                boss.takeDamage(damage + weaponLevel);
+
+                weaponSound(player.getWeapon(player.getCurrentWeapon()).name, "close");
+
                 turns--;
             }
             else if (userInput == "2") {
 
                 int damage = getRand(player.getMagic(player.getCurrentMagic()).minDmg, player.getMagic(player.getCurrentMagic()).maxDmg);
+
+                magicSound(player.getMagic(player.getCurrentMagic()).name, "start");
 
                 std::cout << "You cast " << player.getCurrentMagic() << "...\n";
                 std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -848,7 +910,10 @@ void bossEvent() {
                 std::cout << "You have dealt " << damage << " damage to the dragon...\n";
                 std::this_thread::sleep_for(std::chrono::seconds(2));
 
-                boss.takeDamage(damage);
+                boss.takeDamage(damage + magicLevel);
+
+                magicSound(player.getMagic(player.getCurrentMagic()).name, "close");
+
 
                 turns--;
             }
@@ -870,16 +935,28 @@ void bossEvent() {
 				int damage = getRand(boss.getMinDamage(), boss.getMaxDamage());
 
                 std::cout << '\n';
+
+                mciSendString(TEXT("open \"audio\\dragonAttack.mp3\" type mpegvideo alias dragon"), NULL, 0, NULL);
+                mciSendString(TEXT("play dragon"), NULL, 0, NULL);
+                mciSendString(TEXT("setaudio dragon volume to 50"), NULL, 0, NULL);
+
                 std::cout << "The dragon attacks you for " << damage << " damage...";
                 std::this_thread::sleep_for(std::chrono::seconds(2));
 
-                player.takeDamage(damage);
+                player.takeDamage(damage - defenseLevel);
                 turns = 2;
             }
+
+            mciSendString(TEXT("close fireAttack"), NULL, 0, NULL);
 
             if (player.getHealthPoints() <= 0) {
                 std::cout << '\n';
                 clearScreen();
+
+                mciSendString(TEXT("open \"audio\\playerDeath.mp3\" type mpegvideo alias death"), NULL, 0, NULL);
+                mciSendString(TEXT("play death"), NULL, 0, NULL);
+                mciSendString(TEXT("setaudio death volume to 100"), NULL, 0, NULL);
+
                 std::cout << "You have been defeated by the dragon\n";
                 std::cout << "The game has ended!\n";
 
@@ -891,8 +968,12 @@ void bossEvent() {
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cin.get();
 
+                
+
                 exit(0);
             }
+
+            mciSendString(TEXT("close death"), NULL, 0, NULL);
         }
         else if (userInput == "u") {
             int emptyItems{};
@@ -936,6 +1017,9 @@ void bossEvent() {
                         else {
                             turns--;
                             int healAmount = getRand(4, 10);
+
+                            itemSound("Vitality-Potion", "start");
+
                             player.getItem("Vitality-Potion").amount--;
                             player.heal(healAmount);
                             std::cout << "You have healed for " << healAmount << " health points...\n";
@@ -950,17 +1034,21 @@ void bossEvent() {
                     else if (userInput == "Smokebomb") {
                         player.getItem("Smokebomb").amount--;
 
+                        itemSound("Smokebomb", "start");
+
                         std::cout << "You use a smokebomb to blind the dragon...\n";
                         std::this_thread::sleep_for(std::chrono::seconds(2));
                         std::cout << "You gain an extra turn...\n";
-                        turns++;
+                        turns += 3;
                     }
                     else if (userInput == "Throwing-Knives") {
                         turns--;
 
                         player.getItem("Throwing-Knives").amount--;
 
-                        boss.takeDamage(4);
+                        boss.takeDamage(5);
+
+                        itemSound("Throwing-Knives", "start");
 
                         std::cout << "You throw knives and hit the dragon for 4 damage...\n";
                         std::this_thread::sleep_for(std::chrono::milliseconds(2500));
@@ -968,6 +1056,14 @@ void bossEvent() {
                         std::cout << '\n';
 
                     }
+
+                    //close the item audio
+                    itemSound("Vitality-Potion", "close");
+                    itemSound("Smokebomb", "close");
+                    itemSound("Throwing-Knives", "close");
+
+
+
                 }
                 else {
                     std::cout << "Invalid item... Please try again...\n";
@@ -1073,16 +1169,35 @@ void bossEvent() {
 
 void win(){
 
+    mciSendString(TEXT("close theme"), NULL, 0, NULL);
+
     clearScreen();
+
+    mciSendString(TEXT("open \"audio\\win.mp3\" type mpegvideo alias win"), NULL, 0, NULL);
+    mciSendString(TEXT("play win"), NULL, 0, NULL);
+    mciSendString(TEXT("setaudio win volume to 100"), NULL, 0, NULL);
+
 
 	std::cout << "You have defeated the dragon...\n";
 	std::cout << "You have won the game!\n";
+
+    std::cout << "                                              \n";
+    std::cout << " __ __  ____   __ ______   ___   ____   __ __ \n";
+    std::cout << "|  |  ||    | /  ]      | /   \\ |    \\ |  |  |\n";
+    std::cout << "|  |  | |  | /  /|      ||     ||  D  )|  |  |\n";
+    std::cout << "|  |  | |  |/  / |_|  |_||  O  ||    / |  ~  |\n";
+    std::cout << "|  :  | |  /   \\_  |  |  |     ||    \\ |___, |\n";
+    std::cout << " \\   /  |  \\     | |  |  |     ||  .  \\|     |\n";
+    std::cout << "  \\_/  |____\\____| |__|   \\___/ |__|\\_||____/ \n";
+    std::cout << "                                              \n";
 
 	std::cout << '\n';
 
 	std::cout << "Type \"Enter\" to exit...\n";
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	std::cin.get();
+
+    mciSendString(TEXT("close win"), NULL, 0, NULL);
 
 	exit(0);
 }
@@ -1834,6 +1949,9 @@ void fight(std::vector<int> &playerPosition) {
 
     std::vector<std::vector<std::string>> itemsToDraw;
 
+    //grab sound for dropped items
+    
+
     for (int i = 0; i < enemiesFell;i++) {
         int itemChoice = getRand(0, (int)pickupableItems.size() - 1);
 
@@ -1860,6 +1978,10 @@ void fight(std::vector<int> &playerPosition) {
 
     }
 
+    mciSendString(TEXT("open \"audio\\weaponPickup.mp3\" type mpegvideo alias weaponP"), NULL, 0, NULL);
+    mciSendString(TEXT("play weaponP"), NULL, 0, NULL);
+    mciSendString(TEXT("setaudio weaponP volume to 100"), NULL, 0, NULL);
+
     drawItems(itemsToDraw);
 
     std::cout << '\n';
@@ -1870,7 +1992,7 @@ void fight(std::vector<int> &playerPosition) {
 
     clearScreen();
 
-    
+    mciSendString(TEXT("close weaponP"), NULL, 0, NULL);
 }
 
 void drawItems(std::vector<std::vector<std::string>>& itemsToDraw) {
