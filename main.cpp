@@ -23,7 +23,7 @@ std::vector<std::vector<std::string>> dungeon =
     //room 3 - possible to encounter (3) enemies
     {"-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"},
     {"-1", "-1", "-1", "-1", "3", "3", "3", "3", "3", "b", "3", "-1"},
-    {"-1", "-1", "3", "3", "3", "3", "t", "3", "3", "3", "3", "-1"},
+    {"-1", "-1", "3", "3", "3", "3", "t", "3", "3", "s", "3", "-1"},
     {"-1", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "-1"},
     {"-1", "3", "3", "c", "3", "3", "3", "3", "3", "3", "c", "-1"},
     {"-1", "3", "3", "-1", "-1", "-1", "3", "w", "3", "3", "-1", "-1"},
@@ -838,7 +838,7 @@ void bossEvent() {
 
     int turns = 2;
 
-    Enemy boss("Dragon", 75, 5, 9, {});
+    Enemy boss("Dragon", 1, 5, 9, {});
 
     while (boss.getHealthPoints() > 0) {
         clearScreen();
@@ -940,14 +940,14 @@ void bossEvent() {
                 mciSendString(TEXT("play dragon"), NULL, 0, NULL);
                 mciSendString(TEXT("setaudio dragon volume to 50"), NULL, 0, NULL);
 
-                std::cout << "The dragon attacks you for " << damage << " damage...";
+                std::cout << "The dragon attacks you for " << damage - defenseLevel<< " damage...";
                 std::this_thread::sleep_for(std::chrono::seconds(2));
 
                 player.takeDamage(damage - defenseLevel);
                 turns = 2;
             }
 
-            mciSendString(TEXT("close fireAttack"), NULL, 0, NULL);
+            mciSendString(TEXT("close dragon"), NULL, 0, NULL);
 
             if (player.getHealthPoints() <= 0) {
                 std::cout << '\n';
@@ -1394,7 +1394,7 @@ void fight(std::vector<int> &playerPosition) {
         //if not, then all the enemies attack the player
         //terminal messages will be enemy attacking and damage amount dealt
         
-        std::cout << "Current Health: " << player.getHealthPoints() << '\n';
+        std::cout << player.getName() << " Health: " << player.getHealthPoints() << '\n';
 		std::string userInput;
 		std::cout << "Enter a command or type 'help' for a list of commands...\n";
 		std::cout << ">";

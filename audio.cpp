@@ -60,7 +60,7 @@ void magicSound(std::string magic, std::string state) {
 			mciSendString(TEXT("play lightningAttack"), NULL, 0, NULL);
 			mciSendString(TEXT("setaudio lightningAttack volume to 100"), NULL, 0, NULL);
 		}
-		else if (magic == "IceStorm") {
+		else if (magic == "Icestorm") {
 			mciSendString(TEXT("open \"audio\\iceSpell.mp3\" type mpegvideo alias iceAttack"), NULL, 0, NULL);
 			mciSendString(TEXT("play iceAttack"), NULL, 0, NULL);
 			mciSendString(TEXT("setaudio iceAttack volume to 100"), NULL, 0, NULL);
@@ -73,7 +73,7 @@ void magicSound(std::string magic, std::string state) {
 		else if (magic == "Lightning") {
 			mciSendString(TEXT("close lightningAttack"), NULL, 0, NULL);
 		}
-		else if (magic == "IceStorm") {
+		else if (magic == "Icestorm") {
 			mciSendString(TEXT("close iceAttack"), NULL, 0, NULL);
 		}
 	}
