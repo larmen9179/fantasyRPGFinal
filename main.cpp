@@ -23,7 +23,7 @@ std::vector<std::vector<std::string>> dungeon =
     //room 3 - possible to encounter (3) enemies
     {"-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"},
     {"-1", "-1", "-1", "-1", "3", "3", "3", "3", "3", "b", "3", "-1"},
-    {"-1", "-1", "3", "3", "3", "3", "t", "3", "3", "3", "3", "-1"},
+    {"-1", "-1", "3", "3", "3", "3", "t", "3", "3", "s", "3", "-1"},
     {"-1", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "-1"},
     {"-1", "3", "3", "c", "3", "3", "3", "3", "3", "3", "c", "-1"},
     {"-1", "3", "3", "-1", "-1", "-1", "3", "w", "3", "3", "-1", "-1"},
@@ -38,8 +38,8 @@ std::vector<std::vector<std::string>> dungeon =
 
     //room 1 encounters just one enemy
     {"-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "1", "-1"},
-    {"-1", "-1", "c", "1", "1", "1", "1", "1", "1", "1", "w", "-1"},
-    {"-1", "1", "1", "-1", "t", "1", "-1", "-1", "1", "c", "-1", "-1"},
+    {"-1", "-1", "c", "1", "1", "t", "1", "1", "1", "1", "w", "-1"},
+    {"-1", "1", "1", "-1", "1", "1", "-1", "-1", "1", "c", "-1", "-1"},
     {"-1", "s", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"}
  };
 
@@ -47,7 +47,7 @@ std::vector<std::vector<std::string>> dungeon =
 Player player("", dungeon); 
 
 //pickupable weapons/items/magic
-std::vector<Weapon> pickupableWeapons = { Weapon("Crossbow", 6, 11, {
+std::vector<Weapon> pickupableWeapons = { Weapon("Crossbow", 6, 9, {
     "                                                   ",
     "                  *++#                             ",
     "                  ##==##                           ",
@@ -73,7 +73,7 @@ std::vector<Weapon> pickupableWeapons = { Weapon("Crossbow", 6, 11, {
     "       #*+#                                        ",
     "       #                                           ",
 	"                                                   "
-    }), Weapon("Axe", 4, 8, {
+    }), Weapon("Axe", 4, 7, {
     "                                                   ",
     "                                 ##                ",
     "                                 ####              ",
@@ -99,7 +99,7 @@ std::vector<Weapon> pickupableWeapons = { Weapon("Crossbow", 6, 11, {
     "      ####                                         ",
     "       #                                           ",
     "                                                   "
-    }), Weapon("Sword", 2, 5, {
+    }), Weapon("Sword", 2, 4, {
     "                                                ",
     "                                               #",
     "                                             ###",
@@ -127,7 +127,7 @@ std::vector<Weapon> pickupableWeapons = { Weapon("Crossbow", 6, 11, {
     "     #*+*                                       ",
     "                                                "
     })};
-std::vector<Weapon> pickupableMagic = {Weapon("Icestorm", 3, 12, {
+std::vector<Weapon> pickupableMagic = {Weapon("Icestorm", 5, 10, {
     
     "                                                   ",
     "                      +  *  =                      ",
@@ -156,7 +156,7 @@ std::vector<Weapon> pickupableMagic = {Weapon("Icestorm", 3, 12, {
     "                      +  *  =                      ",
 	"                                                   "
     
-    }), Weapon("Lightning", 2,9, {
+    }), Weapon("Lightning", 3,8, {
     
 	"												    ",
     "                           #@                      ",
@@ -185,7 +185,7 @@ std::vector<Weapon> pickupableMagic = {Weapon("Icestorm", 3, 12, {
     "                     @                             ",
 	"												    "
     
-    }), Weapon("Fireball", 1, 3, {
+    }), Weapon("Fireball", 1, 5, {
     "                                                   ",
 	"                                                   ",
     "                 .--                               ",
@@ -825,6 +825,8 @@ void eventHandler(const std::vector<int> &playerPosition){
 }
 
 void bossEvent() {
+
+    int dragonState = 0;
     clearScreen();
     std::cout << "WELCOME TO MY LAIR...\n";
 
@@ -838,7 +840,7 @@ void bossEvent() {
 
     int turns = 2;
 
-    Enemy boss("Dragon", 75, 5, 9, {});
+    Enemy boss("Dragon", 75, 3, 5, {});
 
     while (boss.getHealthPoints() > 0) {
         clearScreen();
@@ -932,19 +934,59 @@ void bossEvent() {
 
             //bosses turn to attack
             if (turns == 0) {
-				int damage = getRand(boss.getMinDamage(), boss.getMaxDamage());
 
-                std::cout << '\n';
+                if(dragonState == 0){
+                    //implementing charge attack chance
+                    int specialChance = getRand(1, 10);
 
-                mciSendString(TEXT("open \"audio\\dragonAttack.mp3\" type mpegvideo alias dragon"), NULL, 0, NULL);
-                mciSendString(TEXT("play dragon"), NULL, 0, NULL);
-                mciSendString(TEXT("setaudio dragon volume to 50"), NULL, 0, NULL);
+                    if (specialChance <= 4) {
+                        dragonState = 1;
+                        std::cout << "The dragon charges a fireball...\n";
+                        std::this_thread::sleep_for(std::chrono::seconds(2));
 
-                std::cout << "The dragon attacks you for " << damage - defenseLevel<< " damage...";
-                std::this_thread::sleep_for(std::chrono::seconds(2));
+                        turns = 1;
+                    }
+                    else {
+                        int damage = getRand(boss.getMinDamage(), boss.getMaxDamage());
 
-                player.takeDamage(damage - defenseLevel);
-                turns = 2;
+                        std::cout << '\n';
+
+                        mciSendString(TEXT("open \"audio\\dragonAttack.mp3\" type mpegvideo alias dragon"), NULL, 0, NULL);
+                        mciSendString(TEXT("play dragon"), NULL, 0, NULL);
+                        mciSendString(TEXT("setaudio dragon volume to 50"), NULL, 0, NULL);
+
+                        std::cout << "The dragon attacks you for " << damage << " damage...";
+                        std::this_thread::sleep_for(std::chrono::seconds(2));
+
+                        player.takeDamage(damage);
+                        turns = 2;
+                    }
+                }
+                else if (dragonState == 1) {
+                    int damageChange = static_cast<int>(player.getHealthPoints() * .75);
+                    
+
+                    if (player.getHealthPoints() <= 3) {
+                        damageChange = 1;
+                        player.setHealthPoints(1);
+                    }
+					else {
+						player.takeDamage(damageChange);
+					}
+                    
+
+                    std::cout << '\n';
+
+                    mciSendString(TEXT("open \"audio\\dragonAttack.mp3\" type mpegvideo alias dragon"), NULL, 0, NULL);
+                    mciSendString(TEXT("play dragon"), NULL, 0, NULL);
+                    mciSendString(TEXT("setaudio dragon volume to 50"), NULL, 0, NULL);
+
+                    std::cout << "The dragon shoots a fireball at you for " << damageChange << " damage...";
+                    std::this_thread::sleep_for(std::chrono::seconds(2));
+
+                    turns = 2;
+                    dragonState = 0;
+                }
             }
 
             mciSendString(TEXT("close dragon"), NULL, 0, NULL);

@@ -19,7 +19,7 @@ Player::Player(const std::string &nameIn, const std::vector<std::vector<std::str
 	
 	: name(nameIn), 
 	attackLevel(1), 
-	maxHealth(10), 
+	maxHealth(18), 
 	healthPoints(10), 
 	keys(0), 
 	hasMap(false), 
