@@ -1039,7 +1039,7 @@ void bossEvent() {
                         std::cout << "You use a smokebomb to blind the dragon...\n";
                         std::this_thread::sleep_for(std::chrono::seconds(2));
                         std::cout << "You gain an extra turn...\n";
-                        turns += 3;
+                        turns += 2;
                     }
                     else if (userInput == "Throwing-Knives") {
                         turns--;
@@ -1057,12 +1057,6 @@ void bossEvent() {
 
                     }
 
-                    //close the item audio
-                    itemSound("Vitality-Potion", "close");
-                    itemSound("Smokebomb", "close");
-                    itemSound("Throwing-Knives", "close");
-
-
 
                 }
                 else {
@@ -1072,6 +1066,11 @@ void bossEvent() {
                 }
 
             }
+
+            //close the item audio
+            itemSound("Vitality-Potion", "close");
+            itemSound("Smokebomb", "close");
+            itemSound("Throwing-Knives", "close");
         }
         else if (userInput == "i") {
             showInventory();
