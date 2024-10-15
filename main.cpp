@@ -620,11 +620,15 @@ int main()
         }));
 
     //calling the main game loop
-
+    title();
     nameChoice();
 
     gameLoop();
     return 0;
+}
+
+void title() {
+
 }
 
 void nameChoice() {
@@ -638,6 +642,8 @@ void nameChoice() {
     std::cout << "  \\_/\\_/  |_____||_____|\\____| \\___/ |___|___||_____|\n";
     std::cout << "                                                     \n";
 
+    std::cout << "";
+    std::cout << "";
     std::cout << "Please enter in your name adventurer: ";
     std::string name;
     std::cin >> name;
@@ -965,10 +971,9 @@ void bossEvent() {
                 else if (dragonState == 1) {
                     int damageChange = static_cast<int>(player.getHealthPoints() * .75);
                     
-
                     if (player.getHealthPoints() <= 3) {
                         damageChange = 1;
-                        player.setHealthPoints(1);
+                        player.setHealthPoints(player.getHealthPoints() - 1);
                     }
 					else {
 						player.takeDamage(damageChange);

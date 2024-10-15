@@ -23,6 +23,7 @@ void drawBoss(Enemy & boss);
 void drawDeath();
 void win();
 void nameChoice();
+void title();
 
 //------------------------
 std::vector<int> playerStart();
