@@ -23,7 +23,7 @@ std::vector<std::vector<std::string>> dungeon =
     //room 3 - possible to encounter (3) enemies
     {"-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1", "-1"},
     {"-1", "-1", "-1", "-1", "3", "3", "3", "3", "3", "b", "3", "-1"},
-    {"-1", "-1", "3", "3", "3", "3", "t", "3", "3", "s", "3", "-1"},
+    {"-1", "-1", "3", "3", "3", "3", "t", "3", "3", "3", "3", "-1"},
     {"-1", "3", "3", "3", "3", "3", "3", "3", "3", "3", "3", "-1"},
     {"-1", "3", "3", "c", "3", "3", "3", "3", "3", "3", "c", "-1"},
     {"-1", "3", "3", "-1", "-1", "-1", "3", "w", "3", "3", "-1", "-1"},
@@ -500,7 +500,7 @@ int main()
     //-------------TESTING-------------------------------
 
     //giving the player the map early to test print map functionality
-    player.setHasMap(true);
+    //player.setHasMap(true);
 
     //--------------------------------------------
     
@@ -525,31 +525,15 @@ int main()
 
     //-----------TESTING---------------------------
     //Testing logic for items
-
+    /*
     std::string firstItem = "Throwing-Knives";
     std::string secondItem = "Vitality-Potion";
     std::string thirdItem = "Smokebomb";
     player.addItem(firstItem, 1, 15, 0, {});
     player.addItem(secondItem, 1, 0, 7, {});
     player.addItem(thirdItem, 1, 0, 0, {});
-
+    */
     //--------------------------------------------
-
-    /*
-
-    //temporarily storing the Enemy ascii art as a raw string literal
-    enemies.push_back(Enemy("Goblin", 5, 1, R"(
-1                                              
-2 __ __  ____   __ ______   ___   ____   __ __ 
-3|  |  ||    | /  ]      | /   \ |    \ |  |  |
-4|  |  | |  | /  /|      ||     ||  D  )|  |  |
-5|  |  | |  |/  / |_|  |_||  O  ||    / |  ~  |
-6|  :  | |  /   \_  |  |  |     ||    \ |___, |
-7 \   /  |  \     | |  |  |     ||  .  \|     |
-8  \_/  |____\____| |__|   \___/ |__|\_||____/ 
-9                                              
-)"));
-     */
 
     //adding the enemies to the enemies vector
     enemies.push_back(Enemy("Goblin", 6, 2, 3, {
@@ -638,7 +622,6 @@ void title() {
 
     std::cout << '\n';
     std::cout << "Type \"Enter\" to continue...\n";
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cin.get();
 
     clearScreen();
@@ -952,89 +935,7 @@ void bossEvent() {
                 continue;
             }
 
-            //bosses turn to attack
-            if (turns == 0) {
-
-                if(dragonState == 0){
-                    //implementing charge attack chance
-                    int specialChance = getRand(1, 10);
-
-                    if (specialChance <= 4) {
-                        dragonState = 1;
-                        std::cout << "The dragon charges a fireball...\n";
-                        std::this_thread::sleep_for(std::chrono::seconds(2));
-
-                        turns = 1;
-                    }
-                    else {
-                        int damage = getRand(boss.getMinDamage(), boss.getMaxDamage());
-
-                        std::cout << '\n';
-
-                        mciSendString(TEXT("open \"audio\\dragonAttack.mp3\" type mpegvideo alias dragon"), NULL, 0, NULL);
-                        mciSendString(TEXT("play dragon"), NULL, 0, NULL);
-                        mciSendString(TEXT("setaudio dragon volume to 50"), NULL, 0, NULL);
-
-                        std::cout << "The dragon attacks you for " << damage << " damage...";
-                        std::this_thread::sleep_for(std::chrono::seconds(2));
-
-                        player.takeDamage(damage);
-                        turns = 2;
-                    }
-                }
-                else if (dragonState == 1) {
-                    int damageChange = static_cast<int>(player.getHealthPoints() * .75);
-                    
-                    if (player.getHealthPoints() <= 3) {
-                        damageChange = 1;
-                        player.setHealthPoints(player.getHealthPoints() - 1);
-                    }
-					else {
-						player.takeDamage(damageChange);
-					}
-                    
-
-                    std::cout << '\n';
-
-                    mciSendString(TEXT("open \"audio\\dragonAttack.mp3\" type mpegvideo alias dragon"), NULL, 0, NULL);
-                    mciSendString(TEXT("play dragon"), NULL, 0, NULL);
-                    mciSendString(TEXT("setaudio dragon volume to 50"), NULL, 0, NULL);
-
-                    std::cout << "The dragon shoots a fireball at you for " << damageChange << " damage...";
-                    std::this_thread::sleep_for(std::chrono::seconds(2));
-
-                    turns = 2;
-                    dragonState = 0;
-                }
-            }
-
-            mciSendString(TEXT("close dragon"), NULL, 0, NULL);
-
-            if (player.getHealthPoints() <= 0) {
-                std::cout << '\n';
-                clearScreen();
-
-                mciSendString(TEXT("open \"audio\\playerDeath.mp3\" type mpegvideo alias death"), NULL, 0, NULL);
-                mciSendString(TEXT("play death"), NULL, 0, NULL);
-                mciSendString(TEXT("setaudio death volume to 100"), NULL, 0, NULL);
-
-                std::cout << "You have been defeated by the dragon\n";
-                std::cout << "The game has ended!\n";
-
-                drawDeath();
-
-                std::cout << '\n';
-
-                std::cout << "Type \"Enter\" to exit...\n";
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cin.get();
-
-                
-
-                exit(0);
-            }
-
-            mciSendString(TEXT("close death"), NULL, 0, NULL);
+            
         }
         else if (userInput == "u") {
             int emptyItems{};
@@ -1100,6 +1001,8 @@ void bossEvent() {
                         std::cout << "You use a smokebomb to blind the dragon...\n";
                         std::this_thread::sleep_for(std::chrono::seconds(2));
                         std::cout << "You gain an extra turn...\n";
+                        std::this_thread::sleep_for(std::chrono::seconds(2));
+
                         turns += 2;
                     }
                     else if (userInput == "Throwing-Knives") {
@@ -1222,6 +1125,89 @@ void bossEvent() {
 			std::cin.get();
 			continue;
         }
+
+        //bosses turn to attack
+        if (turns == 0) {
+
+            if (dragonState == 0) {
+                //implementing charge attack chance
+                int specialChance = getRand(1, 10);
+
+                if (specialChance <= 4) {
+                    dragonState = 1;
+                    std::cout << "The dragon charges a fireball...\n";
+                    std::this_thread::sleep_for(std::chrono::seconds(2));
+
+                    turns = 1;
+                }
+                else {
+                    int damage = getRand(boss.getMinDamage(), boss.getMaxDamage());
+
+                    std::cout << '\n';
+
+                    mciSendString(TEXT("open \"audio\\dragonAttack.mp3\" type mpegvideo alias dragon"), NULL, 0, NULL);
+                    mciSendString(TEXT("play dragon"), NULL, 0, NULL);
+                    mciSendString(TEXT("setaudio dragon volume to 50"), NULL, 0, NULL);
+
+                    std::cout << "The dragon attacks you for " << damage << " damage...";
+                    std::this_thread::sleep_for(std::chrono::seconds(2));
+
+                    player.takeDamage(damage);
+                    turns = 2;
+                }
+            }
+            else if (dragonState == 1) {
+                int damageChange = static_cast<int>(player.getHealthPoints() * .75);
+
+                if (player.getHealthPoints() <= 3) {
+                    damageChange = 1;
+                    player.setHealthPoints(player.getHealthPoints() - 1);
+                }
+                else {
+                    player.takeDamage(damageChange);
+                }
+
+
+                std::cout << '\n';
+
+                mciSendString(TEXT("open \"audio\\dragonAttack.mp3\" type mpegvideo alias dragon"), NULL, 0, NULL);
+                mciSendString(TEXT("play dragon"), NULL, 0, NULL);
+                mciSendString(TEXT("setaudio dragon volume to 50"), NULL, 0, NULL);
+
+                std::cout << "The dragon shoots a fireball at you for " << damageChange << " damage...";
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+
+                turns = 2;
+                dragonState = 0;
+            }
+        }
+
+        mciSendString(TEXT("close dragon"), NULL, 0, NULL);
+
+        if (player.getHealthPoints() <= 0) {
+            std::cout << '\n';
+            clearScreen();
+
+            mciSendString(TEXT("open \"audio\\playerDeath.mp3\" type mpegvideo alias death"), NULL, 0, NULL);
+            mciSendString(TEXT("play death"), NULL, 0, NULL);
+            mciSendString(TEXT("setaudio death volume to 100"), NULL, 0, NULL);
+
+            std::cout << "You have been defeated by the dragon\n";
+            std::cout << "The game has ended!\n";
+
+            drawDeath();
+
+            std::cout << '\n';
+
+            std::cout << "Type \"Enter\" to exit...\n";
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin.get();
+
+
+            exit(0);
+        }
+
+        mciSendString(TEXT("close death"), NULL, 0, NULL);
     }
 
     win();
@@ -1327,12 +1313,7 @@ void gameLoop() {
             
 
             if (transition) {
-                std::cout << "You have switched rooms...\n";
-                std::cout << "You could encounter an enemy in this room...\n";
                 int randNumber = getRand(0, 50);
-
-                std::cout << randNumber << '\n';
-                std::cout << enemyEncounter << '\n';
 
                 if (randNumber <= enemyEncounter) {
                     std::cout << "You have encountered an enemy...\n";
@@ -1345,20 +1326,11 @@ void gameLoop() {
                     mciSendString(TEXT("stop battle"), NULL, 0, NULL);
                     mciSendString(TEXT("close battle"), NULL, 0, NULL);
                     mciSendString(TEXT("play theme repeat"), NULL, 0, NULL);
-
-                    std::cout << "enemy encounter rate is reset\n";
-
                     enemyEncounter = 0;
                 }
                 else {
-					std::cout << "You have not encountered an enemy...\n";
-                    std::cout << "enemy encounter rate is increased\n";
                     enemyEncounter++;
 				}
-            }
-            else {
-                std::cout << "You are still in the same room...\n";
-                std::cout << "you wont encounter an enemy...\n";
             }
         }
 		else {
@@ -1679,11 +1651,13 @@ void fight(std::vector<int> &playerPosition) {
                 }
                     
 		}
+        /*
 		else if (userInput == "r") {
 			std::cout << "You have successfully ran away!\n";
             ran = true;
 			break;
 		}
+        */
 		else if (userInput == "i") {
 			showInventory();
 		}
