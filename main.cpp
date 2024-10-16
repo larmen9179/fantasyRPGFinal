@@ -628,7 +628,20 @@ int main()
 }
 
 void title() {
+    std::cout << " ______  __ __    ___         __  __ __  ____    _____   ___       ___   _____      ___ ___    ___  ____   __ __  ____  ____  \n";
+    std::cout << "|      ||  |  |  /  _]       /  ]|  |  ||    \\  / ___/  /  _]     /   \\ |     |    |   |   |  /  _]|    \\ |  |  ||    ||    \\ \n";
+    std::cout << "|      ||  |  | /  [_       /  / |  |  ||  D  )(   \\_  /  [_     |     ||   __|    | _   _ | /  [_ |  _  ||  |  | |  | |  D  )\n";
+    std::cout << "|_|  |_||  _  ||    _]     /  /  |  |  ||    /  \\__  ||    _]    |  O  ||  |_      |  \\_/  ||    _]|  |  ||  _  | |  | |    / \n";
+    std::cout << "  |  |  |  |  ||   [_     /   \\_ |  :  ||    \\  /  \\ ||   [_     |     ||   _]     |   |   ||   [_ |  |  ||  |  | |  | |    \\ \n";
+    std::cout << "  |  |  |  |  ||     |    \\     ||     ||  .  \\ \\    ||     |    |     ||  |       |   |   ||     ||  |  ||  |  | |  | |  .  \\ \n";
+    std::cout << "  |__|  |__|__||_____|     \\____| \\__,_||__|\\_|  \\___||_____|     \\___/ |__|       |___|___||_____||__|__||__|__||____||__|\\_| \n";
 
+    std::cout << '\n';
+    std::cout << "Type \"Enter\" to continue...\n";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.get();
+
+    clearScreen();
 }
 
 void nameChoice() {
@@ -676,6 +689,7 @@ void drawSpell(std::vector<std::string>& spellImage) {
 	}
 	std::cout << '\n';
 }
+
 void eventHandler(const std::vector<int> &playerPosition){
 
     //weapon room (for gaining new weapons)
@@ -1255,7 +1269,7 @@ void drawBoss(Enemy & boss) {
     for (auto& line : bossImage) 
 		std::cout << line << '\n';
 
-    std::cout << "Dragon Health: " << boss.getHealthPoints() << '\n';
+    std::cout << "Menhir Health: " << boss.getHealthPoints() << '\n';
 
     for (int i = 0; i < dungeon.size() * 3; i++) 
         std::cout << "-";
