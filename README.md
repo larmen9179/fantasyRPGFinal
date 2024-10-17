@@ -14,7 +14,7 @@ There are currently two methods of Installation:
 
 This method is very simple. 
 
-Simply download and run **theCurseOfMenhirSetup.exe** in **releases**. 
+Simply download and run **theCurseOfMenhirSetup.exe** in **Releases**. 
 
 You'll be prompted to choose where to save your game files (I recommend the default it gives you) and when it's finished installing, it'll run like a normal program. 
 
@@ -24,7 +24,7 @@ You also have the option to create a **Desktop shortcut** for the game if you wi
 
 This method is simple too, but with a couple things to keep in mind. 
 
-Download **theCurseOfMenhir.zip** and unzip it in whatever location you wish. 
+Download **theCurseOfMenhir.zip** from **Releases** and unzip it in whatever location you wish. 
 
 I recommend unzipping all the contents into a **new folder**. 
 
