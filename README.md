@@ -34,9 +34,9 @@ In order for the game to run correctly, simply make sure that the **theCurseOfMe
 
 ## Tips
 
-Screen Size: I recommend to play in full screen to avoid any screen distortion when printing images to the terminal.
+**Screen Size**: I recommend to play in full screen to avoid any screen distortion when printing images to the terminal.
 
-Use Zoom in/Zoom out as needed to also fix any screen distortion. 
+**Screen Zoom**: Use Zoom in/Zoom out as needed to also fix any screen distortion. 
 
 ## Credits
 
