@@ -1,8 +1,8 @@
-# fantasyRpg
+# The Curse Of Menhir
  
 ## Background
 
-Welcome to The Curse of Menhir. This game is a short retro fantasy RPG inspired by several classic titles from the early video game era like Angband, Dungeons of Daggorath and Zork. The entire game is made in C++ with terminal visuals and uses no major game development libraries.
+Welcome to The Curse Of Menhir. This game is a short retro fantasy RPG inspired by several classic titles from the early video game era like Angband, Dungeons of Daggorath and Zork. The entire game is made in C++ with terminal visuals and uses no major game development libraries.
 
 ## Installation
 
