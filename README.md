@@ -32,3 +32,10 @@ The zip file has the game's **.exe** file and a folder called **audio** that sto
 
 In order for the game to run correctly, simply make sure that the **.exe** file and the **audio folder** are in the **same folder**. 
 
+##Credits
+
+**Art**: All rendered ASCII art was originally created by Caleb Jolly - Instagram: trytobejolly
+
+**Audio**: Several audio samples were originally created by Justin Prine - Instagram: justinnextin 
+
+All other assets were used from royalty-free archives or created myself. 
