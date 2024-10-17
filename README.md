@@ -13,15 +13,22 @@ There are currently two methods of Installation:
 ### Installer
 
 This method is very simple. 
+
 Simply download and run the **.exe setup file** in **releases**. 
+
 You'll be prompted to choose where to save your game files (I recommend the default it gives you) and when it's finished installing, it'll run like a normal program. 
+
 You also have the option to create a **Desktop shortcut** for the game if you wish.  
 
 ### Zip file
 
 This method is simple too, but with a couple things to keep in mind. 
+
 Download the **zip file** and unzip it in whatever location you wish. 
+
 I recommend unzipping all the contents into a **new folder**. 
+
 The zip file has the game's **.exe** file and a folder called **audio** that stores all the game's audio files. 
+
 In order for the game to run correctly, simply make sure that the **.exe** file and the **audio folder** are in the **same folder**. 
 
