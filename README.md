@@ -30,7 +30,13 @@ I recommend unzipping all the contents into a **new folder**.
 
 The zip file has the game's **theCurseOfMenhir.exe** file and a folder called **audio** that stores all the game's audio files. 
 
-In order for the game to run correctly, simply make sure that the **theCurseOfMenhir.exe** file and the **audio folder** are in the **same folder**. 
+In order for the game to run correctly, simply make sure that the **theCurseOfMenhir.exe** file and the **audio folder** are in the **same folder**.
+
+##Tips
+
+Screen Size: I recommend to play in full screen to avoid any screen distortion when printing images to the terminal.
+
+Use Zoom in/Zoom out as needed to also fix any screen distortion. 
 
 ## Credits
 
